@@ -2,42 +2,41 @@ import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { BodyContainer } from "../../elements/BodyContainer";
+import { __getPosts } from "../../redux/modules/postsSlice";
+import Loading from "./Loading";
 
 const Posts = () => {
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.posts);
-  console.log(posts);
+  const { posts, isLoading, error } = useSelector((state) => state.posts);
 
-  useEffect(() => {});
+  useEffect(() => {
+    dispatch(__getPosts());
+  }, [dispatch]);
+
+  if (isLoading === true) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <div>에러가 발생했어요ㅠㅠ</div>;
+  }
 
   return (
-    <>
-      <PostContainer>
-        <PostList>
+    <BodyContainer>
+      <PostList>
+        {posts.map((post) => (
           <Post>
-            <PostTitle> 님을 칭찬합니다</PostTitle>
+            <PostTitle>{post.target}님을 칭찬합니다</PostTitle>
+            <Postdesc></Postdesc>
           </Post>
-          <Post>
-            <PostTitle> 님을 칭찬합니다</PostTitle>
-          </Post>
-        </PostList>
-      </PostContainer>
-    </>
+        ))}
+      </PostList>
+    </BodyContainer>
   );
 };
 
 export default Posts;
-
-const PostContainer = styled.div`
-  position: fixed;
-  margin: 120px auto 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 100%;
-  height: 80%;
-  background-color: beige;
-`;
 
 const PostList = styled.div`
   display: flex;
@@ -60,4 +59,8 @@ const Post = styled.div`
 const PostTitle = styled.div`
   font-weight: 700;
   font-size: 1.2rem;
+`;
+
+const Postdesc = styled.div`
+  font-size: 1rem;
 `;
