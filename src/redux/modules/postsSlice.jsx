@@ -13,8 +13,20 @@ export const __getPosts = createAsyncThunk(
   "getPosts",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get("http://localhost:3001/todos");
-      return thunkAPI.fulfillWithValue(data.data);
+      const data = await axios.get("http://localhost:3001/posts");
+      return console.log(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __addPosts = createAsyncThunk(
+  "addPosts",
+  async (payload, thunkAPI) => {
+    try {
+      axios.post("http://localhost:3001/posts", payload);
+      return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -38,6 +50,8 @@ const postsSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+
+    // Add
   },
 });
 
