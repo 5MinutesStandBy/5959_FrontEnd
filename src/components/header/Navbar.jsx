@@ -1,13 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import oguNavImg from "../../images/오구등장.png";
-import { HeaderImage } from "./HeaderImage";
+import babyOgu from "../../images/하트아기오구2.png";
 
 const Navbar = () => {
   return (
     <StNav>
-      <StImg src={oguNavImg} />
-      <StTitle>오 구 오 구</StTitle>
+      <StImg src={babyOgu} />
+      <StTitle>OGU OGU</StTitle>
     </StNav>
   );
 };
@@ -24,21 +23,25 @@ const StNav = styled.nav`
 
 const StTitle = styled.div`
   position: absolute;
-  font-size: 2rem;
+  font-family: "CWDangamAsac-Bold";
+  font-size: 40px;
   font-weight: 700;
+  color: yello;
   position: absolute;
-  margin: 10px 0 0 45%;
-  top: 5px;
+  top: 15px;
+  left: 50px;
+  /* background-color: yellow; */
 `;
 
 const StImg = styled.img`
   src: ${(props) => props.src};
-  height: 98px;
+  height: 70px;
   position: fixed;
   top: 0;
   bottom: 0;
-  left: 10px;
+  left: 3px;
   margin: 0;
+  z-index: 10;
 `;
 
 export default Navbar;

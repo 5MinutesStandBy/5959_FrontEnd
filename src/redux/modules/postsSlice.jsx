@@ -56,6 +56,7 @@ const postsSlice = createSlice({
     [__getPosts.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.posts = action.payload;
+      state.posts.sort((a, b) => b.id - a.id);
     },
     [__getPosts.rejected]: (state, action) => {
       state.isLoading = false;
@@ -70,7 +71,7 @@ const postsSlice = createSlice({
     [__addPosts.fulfilled]: (state, action) => {
       state.isSuccess = true;
       state.isLoading = false;
-      state.posts.push(action.payload);
+      state.posts.unshift(action.payload);
     },
     [__addPosts.rejected]: (state, action) => {
       state.isLoading = false;

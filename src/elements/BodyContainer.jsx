@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import bodyImg from ".././images/body배경.png";
 
 export const BodyContainer = styled.div`
   position: absolute;
@@ -8,9 +7,7 @@ export const BodyContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 80%;
+  height: 90%;
   min-height: 800px;
-  background-image: url(${bodyImg});
-  background-repeat: no-repeat;
-  background-size: cover;
+  font-family: "Y_Spotlight";
 `;
