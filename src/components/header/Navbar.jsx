@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import oguNavImg from "../../images/오구등장.png";
+import { HeaderImage } from "./HeaderImage";
 
 const Navbar = () => {
   return (
@@ -11,13 +12,14 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
-
 const StNav = styled.nav`
   width: 100%;
-  height: 120px;
+  min-width: 300px;
+  height: 80px;
   position: fixed;
-  border-bottom: 1px solid rgb(200, 200, 200);
+  z-index: 10;
+  background-color: #fff;
+  box-shadow: 0px 0px 3px 0px grey;
 `;
 
 const StTitle = styled.div`
@@ -26,15 +28,17 @@ const StTitle = styled.div`
   font-weight: 700;
   position: absolute;
   margin: 10px 0 0 45%;
-  top: 30px;
+  top: 5px;
 `;
 
 const StImg = styled.img`
   src: ${(props) => props.src};
-  height: 140px;
+  height: 98px;
   position: fixed;
   top: 0;
   bottom: 0;
   left: 10px;
   margin: 0;
 `;
+
+export default Navbar;

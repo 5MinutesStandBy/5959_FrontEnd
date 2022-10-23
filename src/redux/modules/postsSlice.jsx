@@ -1,16 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// 연결 테스트
-
 const initialState = {
   posts: [],
-  isLoading: false,
   error: null,
+  isLoading: false,
+  isSuccess: false,
 };
 
 export const __getPosts = createAsyncThunk(
-  "getPosts",
+  "get_Posts",
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get("http://localhost:3001/posts");
@@ -22,10 +21,22 @@ export const __getPosts = createAsyncThunk(
 );
 
 export const __addPosts = createAsyncThunk(
-  "addPosts",
+  "add_Posts",
   async (payload, thunkAPI) => {
     try {
       axios.post("http://localhost:3001/posts", payload);
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __deletePosts = createAsyncThunk(
+  "delete_Posts",
+  async (payload, thunkAPI) => {
+    try {
+      axios.delete(`http://localhost:3001/posts/${payload}`);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -52,6 +63,35 @@ const postsSlice = createSlice({
     },
 
     // Add
+    [__addPosts.pending]: (state) => {
+      state.isSuccess = false;
+      state.isLoading = true;
+    },
+    [__addPosts.fulfilled]: (state, action) => {
+      state.isSuccess = true;
+      state.isLoading = false;
+      state.posts.push(action.payload);
+    },
+    [__addPosts.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    // delete
+
+    [__deletePosts.pending]: (state) => {
+      state.isSuccess = false;
+      state.isLoading = true;
+    },
+    [__deletePosts.fulfilled]: (state, action) => {
+      state.isSuccess = true;
+      state.isLoading = false;
+      state.posts = state.posts.filter((post) => post.id !== action.payload);
+    },
+    [__deletePosts.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
 

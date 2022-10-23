@@ -1,12 +1,16 @@
 import styled from "styled-components";
+import bodyImg from ".././images/body배경.png";
 
 export const BodyContainer = styled.div`
-  position: fixed;
-  margin: 120px auto 0 auto;
+  position: absolute;
+  margin: 80px auto 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 100%;
+  width: 100%;
   height: 80%;
-  background-color: beige;
+  min-height: 800px;
+  background-image: url(${bodyImg});
+  background-repeat: no-repeat;
+  background-size: cover;
 `;
