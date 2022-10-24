@@ -10,4 +10,5 @@ export const BodyContainer = styled.div`
   height: 90%;
   min-height: 800px;
   font-family: "Y_Spotlight";
+  overflow: auto;
 `;

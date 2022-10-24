@@ -2,11 +2,22 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+<<<<<<< HEAD:src/pages/postlist/Posts.jsx
 import { BodyContainer } from "../../components/elements/BodyContainer";
 import { __getPosts } from "../../redux/modules/postsSlice";
 import Loading from "../../components/posts/Loading";
 import noteBg from "../../static/images/노트배경2.png";
 import Post from "../../components/posts/Post";
+=======
+import { BodyContainer } from "../../elements/BodyContainer";
+import { __deletePosts, __getPosts } from "../../redux/modules/postsSlice";
+import AddPost from "../modal/AddPost";
+import Loading from "./Loading";
+import noteBg from "../../images/노트배경2.png";
+import { __addPost, __getPost } from "../../redux/modules/postSlice";
+import Post from "./Post";
+import AddComment from "../comment/AddComment";
+>>>>>>> master:src/components/posts/Posts.jsx
 
 const Posts = () => {
   const dispatch = useDispatch();
@@ -36,7 +47,9 @@ const Posts = () => {
       <PostBtn onClick={showAddModal}>칭찬글 남기기</PostBtn>
       <PostList>
         {posts.map((post) => (
+          <>
           <Post key={post.id} post={post}></Post>
+          </>
         ))}
       </PostList>
     </BodyContainer>
@@ -88,4 +101,5 @@ const PostList = styled.div`
   top: 120px;
   width: 80%;
   height: auto;
+  overflow: auto;
 `;
