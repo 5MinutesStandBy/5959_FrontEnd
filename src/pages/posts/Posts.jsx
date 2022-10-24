@@ -7,16 +7,14 @@ import { __getPosts } from "../../redux/modules/postsSlice";
 import Loading from "../../components/posts/Loading";
 import noteBg from "../../static/images/노트배경2.png";
 import Post from "../../components/posts/Post";
+import { useNavigate } from "react-router-dom";
 
 const Posts = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { posts, isLoading, error } = useSelector((state) => state.posts);
   const [addModal, setAddModal] = useState(false);
-
-  const showAddModal = () => {
-    setAddModal(true);
-  };
 
   useEffect(() => {
     dispatch(__getPosts());
@@ -33,7 +31,13 @@ const Posts = () => {
   return (
     <BodyContainer>
       <BgImg src={noteBg} />
-      <PostBtn onClick={showAddModal}>칭찬글 남기기</PostBtn>
+      <PostBtn
+        onClick={() => {
+          navigate("/Addpost");
+        }}
+      >
+        칭찬글 남기기
+      </PostBtn>
       <PostList>
         {posts.map((post) => (
           <>
@@ -90,5 +94,4 @@ const PostList = styled.div`
   top: 120px;
   width: 80%;
   height: auto;
-  overflow: auto;
 `;

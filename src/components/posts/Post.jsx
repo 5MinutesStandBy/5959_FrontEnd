@@ -9,30 +9,17 @@ import UpdatePost from "../../components/posts/UpdatePost";
 const Post = ({ post }) => {
   const dispatch = useDispatch();
   const [updateMode, setUpdateMode] = useState(false);
-  const [openComment, setOpenComment] = useState(false);
 
   // 나중에 유저명으로 삭제 제한시 유저명 받아와서 지정해주기
   const user1 = "bora";
 
-  const openComments = () => {
-    setOpenComment(!openComment);
-  };
   return (
     <>
       <StPost key={post.id}>
         <PostImg src={kingOgu}></PostImg>
         <PostTitle>{post.name} 님을 칭찬합니다 왇</PostTitle>
         <Postdesc>{post.desc}</Postdesc>
-        <OpenCommentBtn onClick={openComments}>댓글 달기</OpenCommentBtn>
-        {post.user === user1 ? (
-          <UpdateBtn
-            onClick={() => {
-              setUpdateMode(true);
-            }}
-          >
-            수정
-          </UpdateBtn>
-        ) : null}
+        <OpenCommentBtn>상세 보기</OpenCommentBtn>
         {post.user === user1 ? (
           <DelBtn onClick={() => dispatch(__deletePosts(post.id))}>삭제</DelBtn>
         ) : null}
