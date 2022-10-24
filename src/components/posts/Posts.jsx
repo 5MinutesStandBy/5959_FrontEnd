@@ -1,14 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { BodyContainer } from "../../elements/BodyContainer";
-import { __getPosts } from "../../redux/modules/postsSlice";
+import { __deletePosts, __getPosts } from "../../redux/modules/postsSlice";
+import AddPost from "../modal/AddPost";
 import Loading from "./Loading";
+import noteBg from "../../images/노트배경2.png";
+import { __addPost, __getPost } from "../../redux/modules/postSlice";
+import Post from "./Post";
 
 const Posts = () => {
   const dispatch = useDispatch();
+
   const { posts, isLoading, error } = useSelector((state) => state.posts);
+  const [addModal, setAddModal] = useState(false);
+
+  const showAddModal = () => {
+    setAddModal(true);
+  };
 
   useEffect(() => {
     dispatch(__getPosts());
@@ -24,13 +34,13 @@ const Posts = () => {
 
   return (
     <BodyContainer>
+      <BgImg src={noteBg} />
+      <PostBtn onClick={showAddModal}>칭찬글 남기기</PostBtn>
       <PostList>
         {posts.map((post) => (
-          <Post>
-            <PostTitle>{post.target}님을 칭찬합니다</PostTitle>
-            <Postdesc></Postdesc>
-          </Post>
+          <Post key={post.id} post={post}></Post>
         ))}
+        {addModal && <AddPost setAddModal={setAddModal}></AddPost>}
       </PostList>
     </BodyContainer>
   );
@@ -38,29 +48,47 @@ const Posts = () => {
 
 export default Posts;
 
+const BgImg = styled.img`
+  src: ${(props) => props.src};
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  min-width: 800px;
+  height: auto;
+  min-height: 870px;
+  max-height: 1500px;
+  /* transform: translate(0%, 0%); */
+`;
+
+const PostBtn = styled.button`
+  position: absolute;
+  padding: 5px 15px;
+  top: 40px;
+  right: 10%;
+  width: 200px;
+  background-color: #fff;
+  color: #ff6600;
+  border: 2px solid #ff6600;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: block;
+  border-radius: 10px;
+  transition: 0.4s;
+  :hover {
+    background-color: #ff6600;
+    color: #fff;
+  }
+  font-family: "Y_Spotlight";
+`;
+
 const PostList = styled.div`
+  position: absolute;
   display: flex;
   flex-direction: column;
-  position: absolute;
+  top: 120px;
   width: 80%;
-  min-height: 70vh;
-  background-color: lightgray;
-`;
-
-const Post = styled.div`
-  width: 100%;
-  min-height: 20vh;
-  background-color: white;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 2px 0px grey;
-`;
-
-const PostTitle = styled.div`
-  font-weight: 700;
-  font-size: 1.2rem;
-`;
-
-const Postdesc = styled.div`
-  font-size: 1rem;
+  height: auto;
 `;

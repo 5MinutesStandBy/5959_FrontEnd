@@ -1,23 +1,49 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { CommonBtn } from "../../elements/CommonBtn";
-import { __addPosts } from "../../redux/modules/postsSlice";
 import ModalContainer from "../../elements/ModalContainer";
+import {
+  clearPost,
+  __getPost,
+  __updatePost,
+} from "../../redux/modules/postSlice";
+import { __getPosts } from "../../redux/modules/postsSlice";
 
-const AddPost = ({ setAddModal }) => {
-  const closeModal = () => {
-    setAddModal(false);
+const UpdatePost = ({ setUpdateMode, post }) => {
+  const [updatedName, setUpdatedName] = useState("");
+  const [updatedDesc, setUpdatedDesc] = useState("");
+
+  const closeMode = () => {
+    setUpdateMode(false);
   };
 
-  // 유저명으로 삭제 제한시 유저명 받아와서 지정해주기
-  const [post, setPost] = useState({
-    user: "bora",
-    name: "",
-    desc: "",
-  });
-  const { user, name, desc } = post;
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(__getPost(post.id));
+    return () => dispatch(clearPost());
+  }, [dispatch, post.id]);
+
+  useEffect(() => {
+    setUpdatedName(post.name);
+    setUpdatedDesc(post.desc);
+  }, [post]);
+
+  const onSaveBtnHandler = () => {
+    if (!updatedName || !updatedDesc) {
+      return alert("내용을 입력 해 주세요!");
+    }
+    dispatch(
+      __updatePost({
+        ...post,
+        name: updatedName,
+        desc: updatedDesc,
+      })
+    );
+    setUpdateMode(false);
+  };
 
   return (
     <ModalContainer bgcolor="#faeae2">
@@ -26,7 +52,7 @@ const AddPost = ({ setAddModal }) => {
         top="5px"
         right="5px"
         color="black"
-        onClick={closeModal}
+        onClick={closeMode}
       >
         X
       </CommonBtn>
@@ -36,9 +62,9 @@ const AddPost = ({ setAddModal }) => {
           type="text"
           placeholder="칭찬하고 싶은 사람을 적어주세요!"
           id="name"
-          value={name}
+          value={updatedName}
           onChange={(e) => {
-            setPost((post) => ({ ...post, name: e.target.value }));
+            setUpdatedName(e.target.value);
           }}
         />
       </StDiv1>
@@ -48,9 +74,9 @@ const AddPost = ({ setAddModal }) => {
           type="text"
           placeholder="칭찬 한마디를 남겨주세요!"
           id="desc"
-          value={desc}
+          value={updatedDesc}
           onChange={(e) => {
-            setPost((post) => ({ ...post, desc: e.target.value }));
+            setUpdatedDesc(e.target.value);
           }}
         />
       </StDiv2>
@@ -58,21 +84,16 @@ const AddPost = ({ setAddModal }) => {
         width="100px"
         bottom="25px"
         right="60px"
-        color="black"
+        color="#75ade2"
         fs="18px"
-        onClick={() => {
-          dispatch(__addPosts(post));
-          setPost({ ...post, name: "", desc: "" });
-          setAddModal(false);
-        }}
+        onClick={onSaveBtnHandler}
       >
-        글 남기기
+        수정하기
       </CommonBtn>
     </ModalContainer>
   );
 };
-
-export default AddPost;
+export default UpdatePost;
 
 const StDiv1 = styled.div`
   font-size: 20px;
