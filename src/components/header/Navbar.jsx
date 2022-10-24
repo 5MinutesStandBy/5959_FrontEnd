@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import babyOgu from "../../static/images/하트아기오구2.png";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   return (
-    <StNav>
+    <StNav onClick={() => navigate("/")}>
       <StImg src={babyOgu} />
       <StTitle>OGU OGU</StTitle>
     </StNav>
@@ -30,6 +33,7 @@ const StTitle = styled.div`
   position: absolute;
   top: 15px;
   left: 50px;
+  cursor: pointer;
   /* background-color: yellow; */
 `;
 
@@ -42,6 +46,7 @@ const StImg = styled.img`
   left: 3px;
   margin: 0;
   z-index: 10;
+  cursor: pointer;
 `;
 
 export default Navbar;

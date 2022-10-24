@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const ModalContainer = styled.div`
-  width: 550px;
-  height: 250px;
+  width: 600px;
+  height: 400px;
   position: absolute;
   top: ${({ top }) => (top ? top : "26%")};
   left: 50%;
