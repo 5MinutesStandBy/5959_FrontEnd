@@ -49,7 +49,7 @@ const postsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    // Get
+    // Get Posts
     [__getPosts.pending]: (state) => {
       state.isLoading = true;
     },
