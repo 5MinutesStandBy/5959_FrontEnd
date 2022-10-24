@@ -2,6 +2,13 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+<<<<<<< HEAD:src/pages/postlist/Posts.jsx
+import { BodyContainer } from "../../components/elements/BodyContainer";
+import { __getPosts } from "../../redux/modules/postsSlice";
+import Loading from "../../components/posts/Loading";
+import noteBg from "../../static/images/노트배경2.png";
+import Post from "../../components/posts/Post";
+=======
 import { BodyContainer } from "../../elements/BodyContainer";
 import { __deletePosts, __getPosts } from "../../redux/modules/postsSlice";
 import AddPost from "../modal/AddPost";
@@ -10,6 +17,7 @@ import noteBg from "../../images/노트배경2.png";
 import { __addPost, __getPost } from "../../redux/modules/postSlice";
 import Post from "./Post";
 import AddComment from "../comment/AddComment";
+>>>>>>> master:src/components/posts/Posts.jsx
 
 const Posts = () => {
   const dispatch = useDispatch();
@@ -43,7 +51,6 @@ const Posts = () => {
           <Post key={post.id} post={post}></Post>
           </>
         ))}
-        {addModal && <AddPost setAddModal={setAddModal}></AddPost>}
       </PostList>
     </BodyContainer>
   );
