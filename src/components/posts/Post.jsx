@@ -4,51 +4,43 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import kingOgu from "../../static/images/왕관오구.png";
 import { __deletePosts } from "../../redux/modules/postsSlice";
-<<<<<<< HEAD
 import UpdatePost from "../../components/posts/UpdatePost";
-=======
-import AddComment from "../comment/AddComment";
-import CommentList from "../comment/CommentList";
-import UpdatePost from "../modal/UpdatePost";
->>>>>>> master
 
 const Post = ({ post }) => {
   const dispatch = useDispatch();
   const [updateMode, setUpdateMode] = useState(false);
-  const [openComment,setOpenComment] = useState(false);
+  const [openComment, setOpenComment] = useState(false);
 
   // 나중에 유저명으로 삭제 제한시 유저명 받아와서 지정해주기
   const user1 = "bora";
 
-  const openComments = () =>{
-    setOpenComment(!openComment)
-  }
+  const openComments = () => {
+    setOpenComment(!openComment);
+  };
   return (
     <>
-    <StPost key={post.id}>
-      <PostImg src={kingOgu}></PostImg>
-      <PostTitle>{post.name} 님을 칭찬합니다 왇</PostTitle>
-      <Postdesc>{post.desc}</Postdesc>
-      <OpenCommentBtn onClick={openComments}>댓글 달기</OpenCommentBtn>
-      {post.user === user1 ? (
-        <UpdateBtn
-          onClick={() => {
-            setUpdateMode(true);
-          }}
-        >
-          수정
-        </UpdateBtn>
-      ) : null}
-      {post.user === user1 ? (
-        <DelBtn onClick={() => dispatch(__deletePosts(post.id))}>삭제</DelBtn>
-      ) : null}
-      {updateMode && (
-        <UpdatePost setUpdateMode={setUpdateMode} post={post}></UpdatePost>
-      )}
-
-    </StPost>
+      <StPost key={post.id}>
+        <PostImg src={kingOgu}></PostImg>
+        <PostTitle>{post.name} 님을 칭찬합니다 왇</PostTitle>
+        <Postdesc>{post.desc}</Postdesc>
+        <OpenCommentBtn onClick={openComments}>댓글 달기</OpenCommentBtn>
+        {post.user === user1 ? (
+          <UpdateBtn
+            onClick={() => {
+              setUpdateMode(true);
+            }}
+          >
+            수정
+          </UpdateBtn>
+        ) : null}
+        {post.user === user1 ? (
+          <DelBtn onClick={() => dispatch(__deletePosts(post.id))}>삭제</DelBtn>
+        ) : null}
+        {updateMode && (
+          <UpdatePost setUpdateMode={setUpdateMode} post={post}></UpdatePost>
+        )}
+      </StPost>
     </>
-    
   );
 };
 
@@ -56,13 +48,13 @@ export default Post;
 
 const StCommentDiv = styled.div`
   display: flex;
-  left:0px;
-  bottom:0px;
+  left: 0px;
+  bottom: 0px;
   display: flex;
-  width:80%;
+  width: 80%;
   min-height: 200px;
-  margin : 0 auto;
-  margin-top : 15px;
+  margin: 0 auto;
+  margin-top: 15px;
   border-radius: 10px;
   box-shadow: 0px 0px 3px 0px grey;
   flex-direction: column;
