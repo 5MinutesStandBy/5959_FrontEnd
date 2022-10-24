@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { CommonBtn } from "../../elements/CommonBtn";
-import ModalContainer from "../../elements/ModalContainer";
+import { CommonBtn } from "../../components/elements/CommonBtn";
+import ModalContainer from "../../components/elements/ModalContainer";
 import {
   clearPost,
   __getPost,

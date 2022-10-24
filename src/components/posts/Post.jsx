@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import kingOgu from "../../images/왕관오구.png";
+import kingOgu from "../../static/images/왕관오구.png";
 import { __deletePosts } from "../../redux/modules/postsSlice";
-import UpdatePost from "../modal/UpdatePost";
+import UpdatePost from "../../components/posts/UpdatePost";
 
 const Post = ({ post }) => {
   const dispatch = useDispatch();

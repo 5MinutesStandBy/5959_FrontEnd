@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import babyOgu from "../../images/하트아기오구2.png";
+import babyOgu from "../../static/images/하트아기오구2.png";
 
 const Navbar = () => {
   return (

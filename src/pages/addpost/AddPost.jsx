@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { CommonBtn } from "../../elements/CommonBtn";
+import { CommonBtn } from "../../components/elements/CommonBtn";
 import { __addPosts } from "../../redux/modules/postsSlice";
-import ModalContainer from "../../elements/ModalContainer";
+import ModalContainer from "../../components/elements/ModalContainer";
 
 const AddPost = ({ setAddModal }) => {
   const closeModal = () => {
@@ -16,6 +16,7 @@ const AddPost = ({ setAddModal }) => {
     name: "",
     desc: "",
   });
+
   const { user, name, desc } = post;
   const dispatch = useDispatch();
 
