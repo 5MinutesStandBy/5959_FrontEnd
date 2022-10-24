@@ -9,6 +9,7 @@ import Loading from "./Loading";
 import noteBg from "../../images/노트배경2.png";
 import { __addPost, __getPost } from "../../redux/modules/postSlice";
 import Post from "./Post";
+import AddComment from "../comment/AddComment";
 
 const Posts = () => {
   const dispatch = useDispatch();
@@ -38,7 +39,9 @@ const Posts = () => {
       <PostBtn onClick={showAddModal}>칭찬글 남기기</PostBtn>
       <PostList>
         {posts.map((post) => (
+          <>
           <Post key={post.id} post={post}></Post>
+          </>
         ))}
         {addModal && <AddPost setAddModal={setAddModal}></AddPost>}
       </PostList>
@@ -91,4 +94,5 @@ const PostList = styled.div`
   top: 120px;
   width: 80%;
   height: auto;
+  overflow: auto;
 `;

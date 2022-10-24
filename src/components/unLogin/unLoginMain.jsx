@@ -6,48 +6,135 @@ import oguMain from '../../images/안녕오구.png'
 import LoginModalSet from '../modal/LoginModalSet'
 import SignInModal from '../modal/SignInModal'
 const UnLoginMain = () => {
+    const [username,setUsername] = useState('');
+    const [password,setPassword] = useState('');
+    const [isLogin,setIsLogin] = useState(false);
 
-    const [modalOpen,setModalOpen] = useState(false);
-    const [signInModal,setSignInModal] = useState(false);
-
-    console.log(modalOpen);
-    const showSignIn = ()=> {
-        setSignInModal(true)
+    const changeIdHandler = (e) =>{
+        setUsername(e.target.value)
     }
 
-    const closeSignIn = () => {
-        setSignInModal(false)
+    const changePasswordHandler = (e) =>{
+        setPassword(e.target.value)
     }
 
-    const showModal = () =>{
-        setModalOpen(true);
-    };
+    const isNotNullHandler = () =>{
+        if(username.trim() === '' || password.trim() === ''){
+            return;
+        }else{
 
-    const closeModal = () => {
-        setModalOpen(false)
+        }
     }
+
 
 
 
 
   return (
     <>
+    <form>
         <BodyContainer style={{flexDirection : "column"}}>
             <span style={{fontSize : "25px"}}>로그인을 하시면 여러분의 칭찬을 볼 수 있어요!!😍</span>
             <StOguMain src={oguMain}/>
-            <StBtnBox>
-                <Button onClick={showModal}>로그인</Button>
-                <Button onClick={showSignIn}>회원가입</Button>
-                {modalOpen && <LoginModalSet closeModal={closeModal}/>}
-                {signInModal && <SignInModal closeSignIn={closeSignIn}/>}
-            </StBtnBox>
-            
+            <StLoginContainer>
+                <StIdBox>
+                    <span>아이디</span>
+                    <StIdInput name='username' onChange={changeIdHandler} minLengt={7}/>
+                    {username.trim() === '' ? <StIdIn>7자리 이상의 아이디를 입력해주세요</StIdIn> : null}
+                </StIdBox>
+                <StPassBox>
+                    <span>비밀번호</span>
+                    <StPassInput type="password" onChange={changePasswordHandler} minLength={8}/>
+                    {password.trim() === '' ? <StPassIn>8자리 이상의 비밀번호를 입력해주세요</StPassIn>: null}
+                </StPassBox>
+                <StBtn>로그인</StBtn>
+                <StSignIn>아직 회원이 아니세요?</StSignIn>
+            </StLoginContainer>
         </BodyContainer>
+        </form>
     </>
   )
 }
 
 export default UnLoginMain
+
+const StPassIn = styled.span`
+    font-size : 10px;
+    color:blue
+`;
+
+const StIdIn = styled.span`
+    font-size : 10px;
+    color:blue
+`;
+
+const StSignIn = styled.span`
+    border:none;
+    margin : 0 auto;
+    margin-top : 40px;
+    color: blue;
+    cursor: pointer;
+`;
+
+const StBtn = styled.span`
+    border:none;
+    margin : 0 auto;
+    margin-top : 40px;
+    cursor: pointer;
+`;
+
+const StPassInput= styled.input`
+    margin-top:10px;
+    border:none;
+    border-bottom: 1px solid #ccc;
+    width:200px;
+
+
+    &:focus{
+        outline: none;
+    }
+`;
+
+const StPassBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin : 0 auto;
+    margin-top: 30px;
+`;
+
+const StIdBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin : 0 auto;
+`;
+
+const StIdInput = styled.input`
+    margin-top:10px;
+    border:none;
+    border-bottom: 1px solid #ccc;
+    width:200px;
+
+
+    &:focus{
+        outline: none;
+    }
+    &span{
+        margin-left : 30px;
+    }
+`;
+
+const StLoginContainer = styled.div`
+    border : 3px solid black;
+    width:300px;
+    height: 300px;
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    padding:25px;
+
+
+`;
 
 const StOguMain  = styled.img`
      src: ${(props) => props.src};

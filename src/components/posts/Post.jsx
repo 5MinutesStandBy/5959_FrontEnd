@@ -4,21 +4,28 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import kingOgu from "../../images/왕관오구.png";
 import { __deletePosts } from "../../redux/modules/postsSlice";
+import AddComment from "../comment/AddComment";
+import CommentList from "../comment/CommentList";
 import UpdatePost from "../modal/UpdatePost";
 
 const Post = ({ post }) => {
   const dispatch = useDispatch();
   const [updateMode, setUpdateMode] = useState(false);
+  const [openComment,setOpenComment] = useState(false);
 
   // 나중에 유저명으로 삭제 제한시 유저명 받아와서 지정해주기
   const user1 = "bora";
 
+  const openComments = () =>{
+    setOpenComment(!openComment)
+  }
   return (
+    <>
     <StPost key={post.id}>
       <PostImg src={kingOgu}></PostImg>
       <PostTitle>{post.name} 님을 칭찬합니다 왇</PostTitle>
       <Postdesc>{post.desc}</Postdesc>
-      <OpenCommentBtn>댓글 달기</OpenCommentBtn>
+      <OpenCommentBtn onClick={openComments}>댓글 달기</OpenCommentBtn>
       {post.user === user1 ? (
         <UpdateBtn
           onClick={() => {
@@ -34,17 +41,36 @@ const Post = ({ post }) => {
       {updateMode && (
         <UpdatePost setUpdateMode={setUpdateMode} post={post}></UpdatePost>
       )}
+
     </StPost>
+    </>
+    
   );
 };
 
 export default Post;
+
+const StCommentDiv = styled.div`
+  display: flex;
+  left:0px;
+  bottom:0px;
+  display: flex;
+  width:80%;
+  min-height: 200px;
+  margin : 0 auto;
+  margin-top : 15px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 3px 0px grey;
+  flex-direction: column;
+  background-color: white;
+`;
 
 const StPost = styled.div`
   position: relative;
   width: 80%;
   min-width: 600px;
   min-height: 200px;
+  height: auto;
   background-color: white;
   margin: 20px auto 0 auto;
   border-radius: 10px;
