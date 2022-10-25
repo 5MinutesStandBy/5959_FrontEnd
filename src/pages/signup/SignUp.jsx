@@ -15,7 +15,8 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [rePass, setRePass] = useState("");
   const [isLogin, setIsLogin] = useState(false);
-
+  const [isClick, setIsClick] = useState(false);
+  
   const changeIdHandler = (e) => {
     setUsername(e.target.value);
   };
@@ -33,6 +34,11 @@ const Signup = () => {
     } else {
     }
   };
+  
+  const changeClick = () =>{
+      setIsClick(true)
+    }
+  
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -49,6 +55,7 @@ const Signup = () => {
 
   return (
     <>
+    <form>
       <BodyContainer style={{ flexDirection: "column" }}>
         <span style={{ fontSize: "25px" }}>
           로그인을 하시면 여러분의 칭찬을 볼 수 있어요!!😍
@@ -57,16 +64,18 @@ const Signup = () => {
         <StLoginContainer>
           <StIdBox>
             <span>아이디</span>
+            <StOverLap>
             <StIdInput
               name="username"
               onChange={changeIdHandler}
               minLengt={7}
             />
-            {username.trim() === "" ? (
+            <span>중복확인</span>
+            </StOverLap>
+            {username.trim() === "" && isClick ? (
               <StIdIn>7자리 이상의 아이디를 입력해주세요</StIdIn>
             ) : null}
           </StIdBox>
-          <StBtn>중복확인</StBtn>
           <StPassBox>
             <span>비밀번호</span>
             <StPassInput
@@ -110,9 +119,22 @@ const Signup = () => {
 
 export default Signup;
 
+
+const StOverLap = styled.div`
+  display: flex;
+  & span{
+    font-size : 10px;
+    position: absolute;
+    right: 400px;
+    cursor: pointer;
+  }
+
+`;
+
+
 const StRePassIn = styled.span`
-  font-size: 10px;
-  color: red;
+    font-size: 10px;
+    color: red;
 `;
 
 const STRePassBox = styled.div`
@@ -159,7 +181,6 @@ const StBtn = styled.span`
 const StDiv = styled.div`
   display: flex;
 `;
-
 const StPassInput = styled.input`
   margin-top: 10px;
   border: none;

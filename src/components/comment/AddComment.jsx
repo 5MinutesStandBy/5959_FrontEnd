@@ -51,6 +51,7 @@ const StCommentBox = styled.div`
     display: flex;
     bottom: 0px;
     left : 200px;
+    border-radius: 10px;
     & span {
         margin-left : 10px;
     }
@@ -59,4 +60,5 @@ const StCommentBox = styled.div`
 const StCommentInput = styled.input`
     width:200px;
     height: 20px;
+    border-radius: 10px;
 `;
