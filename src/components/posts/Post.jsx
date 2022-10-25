@@ -5,9 +5,11 @@ import styled from "styled-components";
 import kingOgu from "../../static/images/왕관오구.png";
 import { __deletePosts } from "../../redux/modules/postsSlice";
 import UpdatePost from "../../components/posts/UpdatePost";
+import { useNavigate } from "react-router-dom";
 
 const Post = ({ post }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [updateMode, setUpdateMode] = useState(false);
 
   // 나중에 유저명으로 삭제 제한시 유저명 받아와서 지정해주기
@@ -19,7 +21,13 @@ const Post = ({ post }) => {
         <PostImg src={kingOgu}></PostImg>
         <PostTitle>{post.name} 님을 칭찬합니다 왇</PostTitle>
         <Postdesc>{post.desc}</Postdesc>
-        <OpenCommentBtn>상세 보기</OpenCommentBtn>
+        <OpenCommentBtn
+          onClick={() => {
+            navigate(`/posts/${post.id}`);
+          }}
+        >
+          상세 보기
+        </OpenCommentBtn>
         {post.user === user1 ? (
           <DelBtn onClick={() => dispatch(__deletePosts(post.id))}>삭제</DelBtn>
         ) : null}
