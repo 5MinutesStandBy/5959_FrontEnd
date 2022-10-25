@@ -14,7 +14,7 @@ const UnLoginMain = () => {
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(false);
 
-  const [isClicked,setisClicked] = useState(false);
+  const [isClicked, setisClicked] = useState(false);
 
   const changeIdHandler = (e) => {
     setUsername(e.target.value);
@@ -42,18 +42,16 @@ const UnLoginMain = () => {
       password: password,
     };
 
-    dispatch(//);
+    dispatch();
   };
 
-  const clickHandler = () =>{
-    setisClicked(true)
-  }
+  const clickHandler = () => {
+    setisClicked(true);
+  };
 
-  
-  const toSignIn = () =>{
-    navigate('/signup')
-  }
-
+  const toSignIn = () => {
+    navigate("/signup");
+  };
 
   return (
     <>
@@ -86,9 +84,10 @@ const UnLoginMain = () => {
                 <StPassIn>8자리 이상의 비밀번호를 입력해주세요</StPassIn>
               ) : null}
             </StPassBox>
-            <StBtn type="submit" onClick={clickHandler}>로그인</StBtn>
+            <StBtn type="submit" onClick={clickHandler}>
+              로그인
+            </StBtn>
             <StSignIn onClick={toSignIn}>아직 회원이 아니세요?</StSignIn>
-
           </StLoginContainer>
         </BodyContainer>
       </form>

@@ -52,6 +52,7 @@ export const postSlice = createSlice({
       };
     },
   },
+
   extraReducers: {
     // Get Post
     [__getPost.pending]: (state) => {
