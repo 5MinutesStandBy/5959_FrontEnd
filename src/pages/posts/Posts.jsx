@@ -14,7 +14,6 @@ const Posts = () => {
   const navigate = useNavigate();
 
   const { posts, isLoading, error } = useSelector((state) => state.posts);
-  const [addModal, setAddModal] = useState(false);
 
   useEffect(() => {
     dispatch(__getPosts());

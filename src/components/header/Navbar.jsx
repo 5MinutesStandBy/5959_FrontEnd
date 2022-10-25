@@ -11,6 +11,7 @@ const Navbar = () => {
       <StImg src={babyOgu} />
       <StTitle>OGU OGU</StTitle>
     </StNav>
+    //토큰 있는 경우 로그아웃 버튼
   );
 };
 
