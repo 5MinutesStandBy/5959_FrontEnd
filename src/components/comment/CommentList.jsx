@@ -1,39 +1,40 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import styled from 'styled-components'
-import { __deleteComment, __updateComment } from '../../redux/modules/commentSlice'
 
-const CommentList = ({comment}) => {
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
+import {
+  __deleteComment,
+  __updateComment,
+} from "../../redux/modules/commentSlice";
 
-    const data = useSelector((state)=>state.comment.comments.data)
-    const [edit,setEdit] = useState(false);
-    const [reply,setReply] = useState(comment.content)
-    const dispatch = useDispatch();
+const CommentList = ({ comment }) => {
+  const data = useSelector((state) => state.comment.comments.data);
+  const [edit, setEdit] = useState(false);
+  const [reply, setReply] = useState(comment.content);
+  const dispatch = useDispatch();
 
-
-
-    const editHandler = () =>{
-      if(reply.trim() === ''){
-        alert("댓글을 입력해주세요!")
-      }else{
-      dispatch(__updateComment({
-        content: reply,
-        id: comment.id,
-        postId: comment.postId,
-      }))
-      setEdit(!edit)
+  const editHandler = () => {
+    if (reply.trim() === "") {
+      alert("댓글을 입력해주세요!");
+    } else {
+      dispatch(
+        __updateComment({
+          content: reply,
+          id: comment.id,
+          postId: comment.postId,
+        })
+      );
+      setEdit(!edit);
     }
-    }
+  };
 
-    const changeReply = (e) => {
-      setReply(e.target.value)
-    }
+  const changeReply = (e) => {
+    setReply(e.target.value);
+  };
 
-    const deleteHandler = () => {
-      dispatch(__deleteComment(comment.id))
-    }
-    
-
+  const deleteHandler = () => {
+    dispatch(__deleteComment(comment.id));
+  };
   return (
     <>
     {!edit ?
@@ -46,6 +47,26 @@ const CommentList = ({comment}) => {
           <StBox>
             <StEdit onClick={editHandler}>수정</StEdit>
             <StDel onClick={deleteHandler}>삭제</StDel>
+
+            <div>
+              ❤️<span>0</span>
+            </div>
+            <div>
+              💔<span>0</span>
+            </div>
+          </StBox>
+        </StCommentList>
+      ) : (
+        <StCommentList>
+          <StCommentBox>
+            <StCommentInput onChange={changeReply} value={reply} />
+          </StCommentBox>
+          <StBox>
+            <StEdit onClick={editHandler}>저장</StEdit>
+          </StBox>
+        </StCommentList>
+      )}
+
             <div>❤️<span>0</span></div>
             <div>💔<span>0</span></div>
           </StBox>
@@ -59,11 +80,12 @@ const CommentList = ({comment}) => {
                 </StBox>
               </StCommentList>}
           
-    </>
-  )
-}
 
-export default CommentList
+    </>
+  );
+};
+
+export default CommentList;
 
 const StCommentInput = styled.input`
    margin-left : 40px;
@@ -92,6 +114,7 @@ const StCommentList = styled.div`
   border : 3px solid black;
   border-radius: 10px;
   margin-top : 10px;
+
   background-color: white;
   display: flex;
   justify-content: space-between;
@@ -102,5 +125,8 @@ const StCommentList = styled.div`
 `;
 
 const StComment = styled.div`
-  margin-left : 40px;
+
+  margin-left: 40px;
 `;
+
+
