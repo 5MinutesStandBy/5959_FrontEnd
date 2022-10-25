@@ -1,8 +1,9 @@
 import React from "react";
-import { BodyContainer } from "../../components/elements/BodyContainer";
+import { BodyContainer } from "../elements/BodyContainer";
 
 const Loading = () => {
-  return <BodyContainer>Loading!</BodyContainer>;
+  return <BodyContainer>Loading중!</BodyContainer>;
 };
 
 export default Loading;
+
