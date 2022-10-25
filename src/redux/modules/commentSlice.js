@@ -44,7 +44,7 @@ export const __updateComment = createAsyncThunk(
     async (payload,thunkAPI)=>{
         try{
             const {data} = await axios(`http://localhost:3001/comments/${payload.id}`,payload)
-            return thunkAPI.fulfillWithValue(data)
+            return thunkAPI.fulfillWithValue(payload)
         }catch(e){
             return thunkAPI.rejectWithValue(e.code)
         }
@@ -88,7 +88,7 @@ extraReducers : {
     },
     [__deleteComment.fulfilled]:(state,action)=>{
         const target = state.comments.data.filter((comment)=>{
-            return comment.id !== action.payload.id
+            return comment.id !== action.payload
         })
         state.comments.data = target
     },
@@ -100,9 +100,9 @@ extraReducers : {
     },
     [__updateComment.fulfilled]:(state,action)=>{
         state.isLoading = false
-        const target = state.comments.data.findIndex((comment)=>{
-            return comment.id === action.payload.id
-        })
+        const target = state.comments.data.findIndex((comment)=>(
+             comment.id === action.payload.id
+        ))
         state.comments.data.splice(target,1,action.payload)
     },
     [__updateComment.rejected]:(state,action)=>{

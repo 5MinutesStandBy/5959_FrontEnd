@@ -26,6 +26,7 @@ const Detail = () => {
     postId: id,
   };
   console.log(postData);
+  console.log(commentsData)
 
   useEffect(() => {
     dispatch(__getPost(id));

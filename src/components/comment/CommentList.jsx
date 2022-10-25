@@ -12,6 +12,7 @@ const CommentList = ({ comment }) => {
   const [reply, setReply] = useState(comment.content);
   const dispatch = useDispatch();
 
+
   const editHandler = () => {
     if (reply.trim() === "") {
       alert("댓글을 입력해주세요!");
