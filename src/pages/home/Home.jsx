@@ -24,12 +24,12 @@ const UnLoginMain = () => {
     setPassword(e.target.value);
   };
 
-  const isNotNullHandler = () => {
-    if (username.trim() === "" || password.trim() === "") {
-      return;
-    } else {
-    }
-  };
+  // const isNotNullHandler = () => {
+  //   if (username.trim() === "" || password.trim() === "") {
+  //     return;
+  //   } else {
+  //   }
+  // };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
