@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import kingOgu from "../../static/images/왕관오구.png";
 import { __deletePosts } from "../../redux/modules/postsSlice";
