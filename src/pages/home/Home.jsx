@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { BodyContainer } from "../../components/elements/BodyContainer";
@@ -6,11 +7,14 @@ import { Button } from "../../components/elements/Button";
 import oguMain from "../../static/images/안녕오구.png";
 
 const UnLoginMain = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(false);
+
   const [isClicked,setisClicked] = useState(false);
-  const navigate = useNavigate();
 
   const changeIdHandler = (e) => {
     setUsername(e.target.value);
@@ -27,6 +31,20 @@ const UnLoginMain = () => {
     }
   };
 
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+
+    console.log("username", username);
+    console.log("password", password);
+
+    let userInfo = {
+      username: username,
+      password: password,
+    };
+
+    dispatch(//);
+  };
+
   const clickHandler = () =>{
     setisClicked(true)
   }
@@ -36,9 +54,10 @@ const UnLoginMain = () => {
     navigate('/signup')
   }
 
+
   return (
     <>
-      <form>
+      <form onSubmit={onSubmitHandler}>
         <BodyContainer style={{ flexDirection: "column" }}>
           <span style={{ fontSize: "25px" }}>
             로그인을 하시면 여러분의 칭찬을 볼 수 있어요!!😍
@@ -67,8 +86,9 @@ const UnLoginMain = () => {
                 <StPassIn>8자리 이상의 비밀번호를 입력해주세요</StPassIn>
               ) : null}
             </StPassBox>
-            <StBtn onClick={clickHandler}>로그인</StBtn>
+            <StBtn type="submit" onClick={clickHandler}>로그인</StBtn>
             <StSignIn onClick={toSignIn}>아직 회원이 아니세요?</StSignIn>
+
           </StLoginContainer>
         </BodyContainer>
       </form>

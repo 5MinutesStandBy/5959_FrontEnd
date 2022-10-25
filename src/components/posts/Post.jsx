@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 const Post = ({ post }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [updateMode, setUpdateMode] = useState(false);
 
   // 나중에 유저명으로 삭제 제한시 유저명 받아와서 지정해주기
   const user1 = "bora";
@@ -23,7 +22,7 @@ const Post = ({ post }) => {
         <Postdesc>{post.desc}</Postdesc>
         <OpenCommentBtn
           onClick={() => {
-            navigate(`/posts/${post.id}`);
+            navigate(`/boards/${post.id}`);
           }}
         >
           상세 보기
@@ -31,30 +30,12 @@ const Post = ({ post }) => {
         {post.user === user1 ? (
           <DelBtn onClick={() => dispatch(__deletePosts(post.id))}>삭제</DelBtn>
         ) : null}
-        {updateMode && (
-          <UpdatePost setUpdateMode={setUpdateMode} post={post}></UpdatePost>
-        )}
       </StPost>
     </>
   );
 };
 
 export default Post;
-
-const StCommentDiv = styled.div`
-  display: flex;
-  left: 0px;
-  bottom: 0px;
-  display: flex;
-  width: 80%;
-  min-height: 200px;
-  margin: 0 auto;
-  margin-top: 15px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 3px 0px grey;
-  flex-direction: column;
-  background-color: white;
-`;
 
 const StPost = styled.div`
   position: relative;
@@ -97,31 +78,6 @@ const Postdesc = styled.div`
   margin: 30px 0 20px 20px;
 `;
 
-const UpdateBtn = styled.button`
-  position: absolute;
-  padding: 5px;
-  top: 150px;
-  right: 70px;
-  width: 50px;
-  background-color: #fff;
-  color: #65676b;
-  border: 2px solid #65676b;
-  font-size: 15px;
-  font-weight: 700;
-  text-align: center;
-  cursor: pointer;
-  box-sizing: border-box;
-  display: block;
-  border-radius: 10px;
-  transition: 0.4s;
-  :hover {
-    background-color: #75ade2;
-    color: #fff;
-    border-color: #75ade2;
-  }
-  font-family: "Y_Spotlight";
-`;
-
 const DelBtn = styled.button`
   position: absolute;
   padding: 5px;
@@ -150,28 +106,6 @@ const DelBtn = styled.button`
 const OpenCommentBtn = styled.button`
   position: absolute;
   top: 150px;
-  left: 185px;
-  width: 100px;
-  background-color: #fff;
-  color: #65676b;
-  border: 0px transparent;
-  font-size: 16px;
-  font-weight: 700;
-  text-align: center;
-  cursor: pointer;
-  box-sizing: border-box;
-  display: block;
-  border-radius: 10px;
-  transition: 0.4s;
-  :hover {
-    color: black;
-  }
-  font-family: "Y_Spotlight";
-`;
-
-const LikeBtn = styled.button`
-  position: absolute;
-  top: 140px;
   left: 185px;
   width: 100px;
   background-color: #fff;

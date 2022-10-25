@@ -2,8 +2,7 @@ import React from "react";
 import { BodyContainer } from "../elements/BodyContainer";
 
 const Loading = () => {
-  return <BodyContainer>Loading중!</BodyContainer>;
+  return <BodyContainer>Loading!</BodyContainer>;
 };
 
 export default Loading;
-

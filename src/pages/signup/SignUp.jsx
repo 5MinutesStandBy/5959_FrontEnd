@@ -1,40 +1,57 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { BodyContainer } from "../../components/elements/BodyContainer";
 import { Button } from "../../components/elements/Button";
 import oguMain from "../../static/images/안녕오구.png";
+import { __addUser } from "../../redux/modules/signupSlice";
 
 const Signup = () => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [rePass,setRePass] = useState("");
-    const [isLogin, setIsLogin] = useState(false);
-    const [isClick, setIsClick] = useState(false);
-  
-    const changeIdHandler = (e) => {
-      setUsername(e.target.value);
-    };
-  
-    const changePasswordHandler = (e) => {
-      setPassword(e.target.value);
-    };
-    
-    const changeRePass = (e) =>{
-        setRePass(e.target.value)
-    }
-    const isNotNullHandler = () => {
-      if (username.trim() === "" || password.trim() === "") {
-        return;
-      } else {
-      }
-    };
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-    const changeClick = () =>{
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [rePass, setRePass] = useState("");
+  const [isLogin, setIsLogin] = useState(false);
+  const [isClick, setIsClick] = useState(false);
+  
+  const changeIdHandler = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const changePasswordHandler = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const changeRePass = (e) => {
+    setRePass(e.target.value);
+  };
+  const isNotNullHandler = () => {
+    if (username.trim() === "" || password.trim() === "") {
+      return;
+    } else {
+    }
+  };
+  
+  const changeClick = () =>{
       setIsClick(true)
     }
   
 
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
 
+    let userInfo = {
+      username: username,
+      password: password,
+      passwordConfirm: rePass,
+    };
+
+    dispatch(__addUser(userInfo));
+    navigate("/");
+  };
 
   return (
     <>
@@ -66,31 +83,42 @@ const Signup = () => {
               onChange={changePasswordHandler}
               minLength={8}
             />
-            {password.trim() === "" && isClick ? (
+            {password.trim() === "" ? (
               <StPassIn>8자리 이상의 비밀번호를 입력해주세요</StPassIn>
             ) : null}
-            
           </StPassBox>
           <STRePassBox>
-          <span>비밀번호 재확인</span>
+            <span>비밀번호 재확인</span>
             <StRePassInput
-                onChange={changeRePass}
-                type='password'
-                minLengt={8}/>
-                {(rePass.trim() === "" || password !== rePass) && isClick ? (
-                <StRePassIn>비밀번호가 일치하지 않습니다</StRePassIn>
-            ): null}
-            </STRePassBox>
-
-          <StBtn onClick={changeClick}>회원가입</StBtn>
+              onChange={changeRePass}
+              type="password"
+              minLengt={8}
+            />
+            {rePass.trim() === "" || password !== rePass ? (
+              <StRePassIn>비밀번호가 일치하지 않습니다</StRePassIn>
+            ) : null}
+          </STRePassBox>
+          <StDiv>
+            <StBtn mg="20px 30px 20px 75px" onClick={onSubmitHandler}>
+              회원가입
+            </StBtn>
+            <StBtn
+              mg="20px 0"
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              돌아가기
+            </StBtn>
+          </StDiv>
         </StLoginContainer>
       </BodyContainer>
-    </form>
-  </>
-  )
-}
+    </>
+  );
+};
 
-export default Signup
+export default Signup;
+
 
 const StOverLap = styled.div`
   display: flex;
@@ -104,7 +132,6 @@ const StOverLap = styled.div`
 `;
 
 
-
 const StRePassIn = styled.span`
     font-size: 10px;
     color: red;
@@ -115,7 +142,6 @@ const STRePassBox = styled.div`
   flex-direction: column;
   margin: 0 auto;
   margin-top: 30px;
-
 `;
 
 const StRePassInput = styled.input`
@@ -148,11 +174,13 @@ const StSignIn = styled.span`
 
 const StBtn = styled.span`
   border: none;
-  margin: 0 auto;
-  margin-top: 40px;
+  margin: ${(props) => props.mg};
   cursor: pointer;
 `;
 
+const StDiv = styled.div`
+  display: flex;
+`;
 const StPassInput = styled.input`
   margin-top: 10px;
   border: none;
