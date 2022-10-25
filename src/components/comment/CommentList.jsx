@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -38,10 +39,12 @@ const CommentList = ({ comment }) => {
 
   return (
     <>
-      {!edit ? (
+    {!edit ?
         <StCommentList>
           <StCommentBox>
-            <StComment>{comment.content}</StComment>
+            <StComment>
+              {comment.content}
+            </StComment>
           </StCommentBox>
           <StBox>
             <StEdit onClick={editHandler}>수정</StEdit>
@@ -54,7 +57,7 @@ const CommentList = ({ comment }) => {
             </div>
           </StBox>
         </StCommentList>
-      ) : (
+      : 
         <StCommentList>
           <StCommentBox>
             <StCommentInput onChange={changeReply} value={reply} />
@@ -63,7 +66,7 @@ const CommentList = ({ comment }) => {
             <StEdit onClick={editHandler}>저장</StEdit>
           </StBox>
         </StCommentList>
-      )}
+}
     </>
   );
 };

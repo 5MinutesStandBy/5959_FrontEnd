@@ -21,12 +21,12 @@ const Detail = () => {
   const dispatch = useDispatch();
 
   const { id } = useParams();
+
   const initialState = {
     content: "",
     postId: id,
   };
-  console.log(postData);
-  console.log(commentsData)
+
 
   useEffect(() => {
     dispatch(__getPost(id));
