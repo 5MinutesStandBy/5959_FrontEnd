@@ -66,7 +66,7 @@ const StPost = styled.div`
   width: 80%;
   min-width: 600px;
   min-height: 200px;
-  height: auto;
+  /* height: auto; */
   background-color: white;
   margin: 20px auto 0 auto;
   border-radius: 10px;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { BodyContainer } from "../../components/elements/BodyContainer";
 import { Button } from "../../components/elements/Button";
@@ -8,6 +9,7 @@ const UnLoginMain = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(false);
+  const navigate = useNavigate();
 
   const changeIdHandler = (e) => {
     setUsername(e.target.value);
@@ -23,6 +25,11 @@ const UnLoginMain = () => {
     } else {
     }
   };
+
+  
+  const toSignIn = () =>{
+    navigate('/signin')
+  }
 
   return (
     <>
@@ -56,7 +63,7 @@ const UnLoginMain = () => {
               ) : null}
             </StPassBox>
             <StBtn>로그인</StBtn>
-            <StSignIn>아직 회원이 아니세요?</StSignIn>
+            <StSignIn onClick={toSignIn}>아직 회원이 아니세요?</StSignIn>
           </StLoginContainer>
         </BodyContainer>
       </form>
