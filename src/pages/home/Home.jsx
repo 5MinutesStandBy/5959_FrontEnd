@@ -14,6 +14,8 @@ const UnLoginMain = () => {
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(false);
 
+  const [isClicked, setisClicked] = useState(false);
+
   const changeIdHandler = (e) => {
     setUsername(e.target.value);
   };
@@ -22,12 +24,12 @@ const UnLoginMain = () => {
     setPassword(e.target.value);
   };
 
-  const isNotNullHandler = () => {
-    if (username.trim() === "" || password.trim() === "") {
-      return;
-    } else {
-    }
-  };
+  // const isNotNullHandler = () => {
+  //   if (username.trim() === "" || password.trim() === "") {
+  //     return;
+  //   } else {
+  //   }
+  // };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -41,6 +43,14 @@ const UnLoginMain = () => {
     };
 
     dispatch();
+  };
+
+  const clickHandler = () => {
+    setisClicked(true);
+  };
+
+  const toSignIn = () => {
+    navigate("/signup");
   };
 
   return (
@@ -59,7 +69,7 @@ const UnLoginMain = () => {
                 onChange={changeIdHandler}
                 minLengt={7}
               />
-              {username.trim() === "" ? (
+              {username.trim() === "" && isClicked ? (
                 <StIdIn>7자리 이상의 아이디를 입력해주세요</StIdIn>
               ) : null}
             </StIdBox>
@@ -70,16 +80,14 @@ const UnLoginMain = () => {
                 onChange={changePasswordHandler}
                 minLength={8}
               />
-              {password.trim() === "" ? (
+              {password.trim() === "" && isClicked ? (
                 <StPassIn>8자리 이상의 비밀번호를 입력해주세요</StPassIn>
               ) : null}
             </StPassBox>
-            <StBtn type="submit" onClick={() => navigate("/boards")}>
+            <StBtn type="submit" onClick={clickHandler}>
               로그인
             </StBtn>
-            <StSignIn onClick={() => navigate("/signup")}>
-              아직 회원이 아니세요?
-            </StSignIn>
+            <StSignIn onClick={toSignIn}>아직 회원이 아니세요?</StSignIn>
           </StLoginContainer>
         </BodyContainer>
       </form>

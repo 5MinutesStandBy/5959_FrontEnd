@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -34,17 +35,19 @@ const CommentList = ({ comment }) => {
   const deleteHandler = () => {
     dispatch(__deleteComment(comment.id));
   };
-
   return (
     <>
-      {!edit ? (
+    {!edit ?
         <StCommentList>
           <StCommentBox>
-            <StComment>{comment.content}</StComment>
+            <StComment>
+              {comment.content}
+            </StComment>
           </StCommentBox>
           <StBox>
             <StEdit onClick={editHandler}>수정</StEdit>
             <StDel onClick={deleteHandler}>삭제</StDel>
+
             <div>
               ❤️<span>0</span>
             </div>
@@ -63,6 +66,21 @@ const CommentList = ({ comment }) => {
           </StBox>
         </StCommentList>
       )}
+
+            <div>❤️<span>0</span></div>
+            <div>💔<span>0</span></div>
+          </StBox>
+        </StCommentList> :
+              <StCommentList>
+                <StCommentBox>
+                  <StCommentInput  onChange={changeReply} value={reply}/>
+                </StCommentBox>
+                <StBox>
+                  <StEdit onClick={editHandler}>저장</StEdit>
+                </StBox>
+              </StCommentList>}
+          
+
     </>
   );
 };
@@ -70,18 +88,19 @@ const CommentList = ({ comment }) => {
 export default CommentList;
 
 const StCommentInput = styled.input`
-  margin-left: 40px;
+   margin-left : 40px;
 `;
 
 const StCommentBox = styled.div``;
 
 const StBox = styled.div`
   display: flex;
-  gap: 20px;
+  gap:20px;
   margin-right: 10px;
 `;
 const StEdit = styled.div`
   cursor: pointer;
+  
 `;
 
 const StDel = styled.div`
@@ -89,12 +108,13 @@ const StDel = styled.div`
 `;
 
 const StCommentList = styled.div`
-  width: 600px;
+  width:600px;
   height: 30px;
   line-height: 30px;
-  border: 3px solid black;
+  border : 3px solid black;
   border-radius: 10px;
-  margin-top: 10px;
+  margin-top : 10px;
+
   background-color: white;
   display: flex;
   justify-content: space-between;
@@ -105,5 +125,8 @@ const StCommentList = styled.div`
 `;
 
 const StComment = styled.div`
+
   margin-left: 40px;
 `;
+
+

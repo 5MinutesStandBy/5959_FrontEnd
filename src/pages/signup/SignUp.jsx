@@ -15,6 +15,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [rePass, setRePass] = useState("");
   const [isLogin, setIsLogin] = useState(false);
+  const [isClick, setIsClick] = useState(false);
 
   const changeIdHandler = (e) => {
     setUsername(e.target.value);
@@ -32,6 +33,10 @@ const Signup = () => {
       return;
     } else {
     }
+  };
+
+  const changeClick = () => {
+    setIsClick(true);
   };
 
   const onSubmitHandler = (e) => {
@@ -57,16 +62,18 @@ const Signup = () => {
         <StLoginContainer>
           <StIdBox>
             <span>아이디</span>
-            <StIdInput
-              name="username"
-              onChange={changeIdHandler}
-              minLengt={7}
-            />
-            {username.trim() === "" ? (
+            <StOverLap>
+              <StIdInput
+                name="username"
+                onChange={changeIdHandler}
+                minLengt={7}
+              />
+              <span>중복확인</span>
+            </StOverLap>
+            {username.trim() === "" && isClick ? (
               <StIdIn>7자리 이상의 아이디를 입력해주세요</StIdIn>
             ) : null}
           </StIdBox>
-          <StBtn>중복확인</StBtn>
           <StPassBox>
             <span>비밀번호</span>
             <StPassInput
@@ -109,6 +116,16 @@ const Signup = () => {
 };
 
 export default Signup;
+
+const StOverLap = styled.div`
+  display: flex;
+  & span {
+    font-size: 10px;
+    position: absolute;
+    right: 400px;
+    cursor: pointer;
+  }
+`;
 
 const StRePassIn = styled.span`
   font-size: 10px;
@@ -159,7 +176,6 @@ const StBtn = styled.span`
 const StDiv = styled.div`
   display: flex;
 `;
-
 const StPassInput = styled.input`
   margin-top: 10px;
   border: none;

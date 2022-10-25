@@ -14,6 +14,7 @@ import CommentList from "../../components/comment/CommentList";
 
 const Detail = () => {
   const postData = useSelector((state) => state.post.board);
+
   const commentsData = useSelector((state) => state.comment.comments.data);
   const [edit, setEdit] = useState(false);
   const todo = useSelector((state) => state.post.todo);
@@ -21,10 +22,12 @@ const Detail = () => {
   const dispatch = useDispatch();
 
   const { id } = useParams();
+
   const initialState = {
     content: "",
     postId: id,
   };
+
   console.log(postData);
 
   useEffect(() => {
