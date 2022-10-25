@@ -62,7 +62,7 @@ const AddPost = () => {
           onClick={() => {
             dispatch(__addPosts(post));
             setPost({ ...post, name: "", desc: "" });
-            navigate("/posts");
+            navigate("/boards");
           }}
         >
           글 남기기
@@ -74,7 +74,7 @@ const AddPost = () => {
           color="black"
           fs="18px"
           onClick={() => {
-            navigate("/posts");
+            navigate("/boards");
           }}
         >
           돌아가기

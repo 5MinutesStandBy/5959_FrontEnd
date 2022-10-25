@@ -7,7 +7,7 @@ export const __getPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:3001/posts/${payload}`
+        `http://localhost:3001/boards/${payload}`
       );
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -17,10 +17,10 @@ export const __getPost = createAsyncThunk(
 );
 
 export const __updatePost = createAsyncThunk(
-  "update_Post",
+  "Post/updatePost",
   async (payload, thunkAPI) => {
     try {
-      axios.patch(`http://localhost:3001/posts/${payload.id}`, payload);
+      axios.patch(`http://localhost:3001/boards/${payload.id}`, payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
@@ -29,7 +29,7 @@ export const __updatePost = createAsyncThunk(
 );
 
 const initialState = {
-  post: {
+  board: {
     id: 0,
     user: "",
     name: "",
@@ -40,11 +40,11 @@ const initialState = {
 };
 
 export const postSlice = createSlice({
-  name: "posts",
+  name: "post",
   initialState,
   reducers: {
     clearPost: (state) => {
-      state.todo = {
+      state.board = {
         id: 0,
         body: "",
         username: "",
@@ -59,7 +59,7 @@ export const postSlice = createSlice({
     },
     [__getPost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.post = action.payload;
+      state.board = action.payload;
     },
     [__getPost.rejected]: (state, action) => {
       state.isLoading = false;
@@ -71,7 +71,7 @@ export const postSlice = createSlice({
     },
     [__updatePost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.todo = action.payload;
+      state.board = action.payload;
     },
     [__updatePost.rejected]: (state, action) => {
       state.isLoading = false;

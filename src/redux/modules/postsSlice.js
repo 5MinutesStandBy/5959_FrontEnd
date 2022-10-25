@@ -9,7 +9,7 @@ const initialState = {
 };
 
 export const __getPosts = createAsyncThunk(
-  "post/getPosts",
+  "Post/getPosts",
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get("http://localhost:3001/posts");
@@ -21,7 +21,7 @@ export const __getPosts = createAsyncThunk(
 );
 
 export const __addPosts = createAsyncThunk(
-  "post/addPosts",
+  "Post/addPosts",
   async (payload, thunkAPI) => {
     try {
       axios.post("http://localhost:3001/posts", payload);
@@ -33,7 +33,7 @@ export const __addPosts = createAsyncThunk(
 );
 
 export const __deletePosts = createAsyncThunk(
-  "post/deletePosts",
+  "Post/deletePosts",
   async (payload, thunkAPI) => {
     try {
       axios.delete(`http://localhost:3001/posts/${payload}`);
