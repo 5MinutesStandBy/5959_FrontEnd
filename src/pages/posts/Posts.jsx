@@ -15,7 +15,9 @@ const Posts = () => {
 
   const { posts, isLoading, error } = useSelector((state) => state.posts);
 
-
+  useEffect(() => {
+    dispatch(__getPosts());
+  }, [dispatch]);
 
   if (isLoading === true) {
     return <Loading />;

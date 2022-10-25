@@ -29,7 +29,7 @@ export const __updatePost = createAsyncThunk(
 );
 
 const initialState = {
-  board: {
+  post: {
     id: 0,
     user: "",
     name: "",
