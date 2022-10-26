@@ -11,6 +11,18 @@ const initialState = {
 
 // 회원가입 정보 보내면 true/false??
 
+export const __addUser1 = createAsyncThunk(
+  "Users/addUser",
+  async (payload, thunkAPI) => {
+    const resData = await axios
+      .post(`http://13.125.2.119/api/auth/signup`, payload)
+      .then((res) => res.data)
+      .catch((err) => console.err(err));
+      console.log(resData)
+    return thunkAPI.fulfillWithValue(resData);
+  }
+);
+
 export const __addUser2 = createAsyncThunk(
   "Users/addUser",
   async ({ userInfo, navigate }, thunkAPI) => {

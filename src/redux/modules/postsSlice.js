@@ -24,13 +24,15 @@ export const __addPosts = createAsyncThunk(
   "Post/addPosts",
   async (payload, thunkAPI) => {
     try {
-      axios.post("http://13.125.2.119:8080/api/boards", payload, {
+       axios.post("http://13.125.2.119:8080/api/boards", payload = {title : payload.name, content : payload.desc},
+       {
         headers: {
-          Authorization: localStorage.getItem("token"),
-          "Refresh-Token": localStorage.getItem("refresh-Token"),
-          "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+        "Refresh-Token": localStorage.getItem("refresh-token"),
+        "Content-Type": "application/json",
         },
-      });
+        });
+      console.log(payload)
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

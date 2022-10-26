@@ -7,9 +7,10 @@ export const __getPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:3001/boards/${payload}`
+        `http://13.125.2.119:8080/api/boards/${payload}`
       );
-      return thunkAPI.fulfillWithValue(data);
+      console.log(data.data)
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -20,7 +21,14 @@ export const __updatePost = createAsyncThunk(
   "Post/updatePost",
   async (payload, thunkAPI) => {
     try {
-      axios.patch(`http://localhost:3001/boards/${payload.id}`, payload);
+      const data = axios.put(`http://13.125.2.119:8080/api/boards/${payload.id}`, payload,
+      {
+        headers: {
+        Authorization: localStorage.getItem("token"),
+        "Refresh-Token": localStorage.getItem("refresh-token"),
+        "Content-Type": "application/json",
+        },
+        });
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
@@ -31,9 +39,8 @@ export const __updatePost = createAsyncThunk(
 const initialState = {
   board: {
     id: 0,
-    user: "",
-    name: "",
-    desc: "",
+    title: "",
+    content: "",
   },
   error: null,
   isLoading: false,
@@ -72,7 +79,7 @@ export const postSlice = createSlice({
     },
     [__updatePost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.board = action.payload;
+      state.board = action.payload
     },
     [__updatePost.rejected]: (state, action) => {
       state.isLoading = false;

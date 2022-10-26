@@ -61,9 +61,8 @@ const Signup = () => {
       return alert("모든 항목을 입력해주세요.");
     }
     console.log(userInfo);
-    // dispatch(__addUser1(userInfo));
-    dispatch(__addUser2({ userInfo, navigate }));
-
+    dispatch(__addUser1(userInfo));
+    // dispatch(__addUser2(userInfo));
     setUsername("");
     setPassword("");
     setRePass("");
@@ -143,12 +142,15 @@ export default Signup;
 
 const StOverLap = styled.div`
   display: flex;
+
+
   & span {
     width: 50px;
     font-size: 10px;
     position: absolute;
-    right: -60px;
+    right:-60px;
     cursor: pointer;
+    width:50px;
   }
 `;
 
@@ -224,6 +226,7 @@ const StIdBox = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  position : relative;
 `;
 
 const StIdInput = styled.input`

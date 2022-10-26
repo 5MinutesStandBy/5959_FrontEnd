@@ -1,14 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import api from "../../shared/api";
 // import jwt_decode from "jwt-decode";
 
+//import Cookie - 쿠키를 쓸건지 로컬스토리지 쓸건지??
+import { setCookie, getCookie, removeCookie } from "../../shared/cookie";
+
+//인스턴스 만들기
 // InitialState
 const initialState = {
   checkusers: [],
   loading: false,
   error: null,
-};
+  };
+// 로그인 Thunk - 데이터를 보내기만하면 존재하는지 검사해서
+// true or false? 아니면 토큰을 주시는걸까용?
+
 
 // 로그인 요청(체크)
 export const __CheckUser = createAsyncThunk(
@@ -17,10 +23,10 @@ export const __CheckUser = createAsyncThunk(
     try {
       const data = await axios.post(`http://13.125.2.119/api/login`, userInfo);
       console.log(data);
-      const token = data.headers.authorization;
-      const refreshToken = data.headers.refreshtoken;
-      localStorage.setItem("token", token); //토큰 로컬 저장
-      localStorage.setItem("refresh-token", refreshToken);
+
+      localStorage.setItem("token",data.headers.authorization)
+      localStorage.setItem("refresh-token",data.headers.refreshtoken)
+      navigate("/boards")
 
       if (data.data.success === true) {
         alert("로그인 성공");
