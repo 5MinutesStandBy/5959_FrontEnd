@@ -17,7 +17,7 @@ const Posts = () => {
 
   useEffect(() => {
     dispatch(__getPosts());
-  }, [dispatch]);
+    }, [dispatch])
 
   if (isLoading === true) {
     return <Loading />;
@@ -26,10 +26,6 @@ const Posts = () => {
   if (error) {
     return <div>에러가 발생했어요ㅠㅠ</div>;
 
-    if(localStorage.token && navigate(-1)){
-      navigate("/boards")
-
-    }
   }
   
   return (

@@ -15,7 +15,7 @@ const initialState = {
 // 로그인 Thunk - 데이터를 보내기만하면 존재하는지 검사해서
 // true or false? 아니면 토큰을 주시는걸까용?
 
-
+console.log(initialState.checkusers)
 export const __CheckUser = createAsyncThunk(
   "Users/loginUser",
   async ({ userInfo, navigate }, thunkAPI) => {
@@ -24,11 +24,11 @@ export const __CheckUser = createAsyncThunk(
         `http://13.125.2.119/api/auth/login`,
         userInfo
       );
-      console.log(data);
       localStorage.setItem("token",data.headers.authorization)
       localStorage.setItem("refresh-token",data.headers.refreshtoken)
+      localStorage.setItem("username", data.data.data.username)
       navigate("/boards")
-
+        console.log(data)
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error);
@@ -56,7 +56,6 @@ export const LoginSlice = createSlice({
     [__CheckUser.fulfilled]: (state, action) => {
       state.loading = false;
       state.checkusers = action.payload;
-      console.log(action.payload);
     },
     [__CheckUser.rejected]: (state, action) => {
       state.loading = false;

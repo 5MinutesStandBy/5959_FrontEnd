@@ -5,6 +5,14 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  
+  // const nav = () => {
+  //   if(localStorage.token !== ''){
+  //     navigate("/boards")
+  //   }else{
+  //     navigate('')
+  //   }
+  // }
 
   return (
     <>
