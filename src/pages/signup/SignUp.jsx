@@ -86,13 +86,13 @@ const Signup = () => {
             ) : null}
           </StPassBox>
           <STRePassBox>
-           { <span>비밀번호 재확인</span>}
+            {<span>비밀번호 재확인</span>}
             <StRePassInput
               onChange={changeRePass}
               type="password"
               minLengt={8}
             />
-            {(rePass.trim() === "" || password !== rePass) && isClick  ? (
+            {(rePass.trim() === "" || password !== rePass) && isClick ? (
               <StRePassIn>비밀번호가 일치하지 않습니다</StRePassIn>
             ) : null}
           </STRePassBox>
@@ -120,9 +120,10 @@ export default Signup;
 const StOverLap = styled.div`
   display: flex;
   & span {
+    width: 50px;
     font-size: 10px;
     position: absolute;
-    right: 650px;
+    right: -60px;
     cursor: pointer;
   }
 `;
@@ -195,6 +196,7 @@ const StPassBox = styled.div`
 `;
 
 const StIdBox = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   margin: 0 auto;

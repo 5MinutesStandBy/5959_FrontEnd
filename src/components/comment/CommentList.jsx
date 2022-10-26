@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -12,7 +11,6 @@ const CommentList = ({ comment }) => {
   const [edit, setEdit] = useState(false);
   const [reply, setReply] = useState(comment.content);
   const dispatch = useDispatch();
-
 
   const editHandler = () => {
     if (reply.trim() === "") {
@@ -38,20 +36,14 @@ const CommentList = ({ comment }) => {
   };
   return (
     <>
-    {!edit ?
+      {!edit ? (
         <StCommentList>
           <StCommentBox>
-            <StComment>
-              {comment.content}
-            </StComment>
+            <StComment>{comment.content}</StComment>
           </StCommentBox>
           <StBox>
             <StEdit onClick={editHandler}>수정</StEdit>
             <StDel onClick={deleteHandler}>삭제</StDel>
-<<<<<<< HEAD
-=======
-
->>>>>>> 3e9dff8adc4a6243021c988c87ba984c7494660b
             <div>
               ❤️<span>0</span>
             </div>
@@ -60,7 +52,7 @@ const CommentList = ({ comment }) => {
             </div>
           </StBox>
         </StCommentList>
-      : 
+      ) : (
         <StCommentList>
           <StCommentBox>
             <StCommentInput onChange={changeReply} value={reply} />
@@ -69,26 +61,7 @@ const CommentList = ({ comment }) => {
             <StEdit onClick={editHandler}>저장</StEdit>
           </StBox>
         </StCommentList>
-<<<<<<< HEAD
-}
-=======
       )}
-
-            <div>❤️<span>0</span></div>
-            <div>💔<span>0</span></div>
-          </StBox>
-        </StCommentList> :
-              <StCommentList>
-                <StCommentBox>
-                  <StCommentInput  onChange={changeReply} value={reply}/>
-                </StCommentBox>
-                <StBox>
-                  <StEdit onClick={editHandler}>저장</StEdit>
-                </StBox>
-              </StCommentList>}
-          
-
->>>>>>> 3e9dff8adc4a6243021c988c87ba984c7494660b
     </>
   );
 };
@@ -96,30 +69,18 @@ const CommentList = ({ comment }) => {
 export default CommentList;
 
 const StCommentInput = styled.input`
-<<<<<<< HEAD
   margin-left: 40px;
-=======
-   margin-left : 40px;
->>>>>>> 3e9dff8adc4a6243021c988c87ba984c7494660b
 `;
 
 const StCommentBox = styled.div``;
 
 const StBox = styled.div`
   display: flex;
-<<<<<<< HEAD
   gap: 20px;
-=======
-  gap:20px;
->>>>>>> 3e9dff8adc4a6243021c988c87ba984c7494660b
   margin-right: 10px;
 `;
 const StEdit = styled.div`
   cursor: pointer;
-<<<<<<< HEAD
-=======
-  
->>>>>>> 3e9dff8adc4a6243021c988c87ba984c7494660b
 `;
 
 const StDel = styled.div`
@@ -127,39 +88,20 @@ const StDel = styled.div`
 `;
 
 const StCommentList = styled.div`
-<<<<<<< HEAD
   width: 600px;
   height: 30px;
   line-height: 30px;
   border: 3px solid black;
   border-radius: 10px;
   margin-top: 10px;
-=======
-  width:600px;
-  height: 30px;
-  line-height: 30px;
-  border : 3px solid black;
-  border-radius: 10px;
-  margin-top : 10px;
-
->>>>>>> 3e9dff8adc4a6243021c988c87ba984c7494660b
   background-color: white;
   display: flex;
   justify-content: space-between;
-
   & div {
     cursor: pointer;
   }
 `;
 
 const StComment = styled.div`
-<<<<<<< HEAD
   margin-left: 40px;
 `;
-=======
-
-  margin-left: 40px;
-`;
-
-
->>>>>>> 3e9dff8adc4a6243021c988c87ba984c7494660b
