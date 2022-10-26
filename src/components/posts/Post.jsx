@@ -7,12 +7,9 @@ import { __deletePosts } from "../../redux/modules/postsSlice";
 import UpdatePost from "../../components/posts/UpdatePost";
 import { useNavigate } from "react-router-dom";
 
-const Post = ({ post }) => {
+const Post = ({ post, username }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // 나중에 유저명으로 삭제 제한시 유저명 받아와서 지정해주기
-  const user1 = "bora";
 
   return (
     <>
@@ -27,7 +24,7 @@ const Post = ({ post }) => {
         >
           상세 보기
         </OpenCommentBtn>
-        {post.user === user1 ? (
+        {post.author === username ? (
           <DelBtn onClick={() => dispatch(__deletePosts(post.id))}>삭제</DelBtn>
         ) : null}
       </StPost>

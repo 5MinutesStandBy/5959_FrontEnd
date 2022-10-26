@@ -14,22 +14,26 @@ const Navbar = () => {
   const ToMypage = () => {
     navigate("/mypage");
   };
-  const ToHome = () => {
-    navigate("/");
+  const ToHomeOrList = () => {
+    if (token) {
+      navigate("/boards");
+    } else {
+      navigate("/");
+    }
   };
 
   const logoutHandler = () => {
     alert("로그아웃 되었습니다.");
     localStorage.removeItem("token");
     localStorage.removeItem("refresh-token");
-    dispatch(logoutUser());
     navigate("/");
+    dispatch(logoutUser());
   };
 
   return (
     <StNav>
-      <StImg src={babyOgu} onClick={ToHome} />
-      <StTitle onClick={ToHome}>OGU OGU</StTitle>
+      <StImg src={babyOgu} onClick={ToHomeOrList} />
+      <StTitle onClick={ToHomeOrList}>OGU OGU</StTitle>
       {token ? (
         <>
           <CommonBtn

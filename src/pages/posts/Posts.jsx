@@ -8,6 +8,7 @@ import Loading from "../../components/posts/Loading";
 import noteBg from "../../static/images/노트배경2.png";
 import Post from "../../components/posts/Post";
 import { useNavigate } from "react-router-dom";
+import { __getUsername } from "../../redux/modules/signinSlice";
 
 const Posts = () => {
   const dispatch = useDispatch();
@@ -17,7 +18,10 @@ const Posts = () => {
 
   useEffect(() => {
     dispatch(__getPosts());
+    dispatch(__getUsername());
   }, [dispatch]);
+
+  const username = useSelector((state) => console.log(state.signin.username));
 
   if (isLoading === true) {
     return <Loading />;
@@ -25,13 +29,8 @@ const Posts = () => {
 
   if (error) {
     return <div>에러가 발생했어요ㅠㅠ</div>;
-
-    if(localStorage.token && navigate(-1)){
-      navigate("/boards")
-
-    }
   }
-  
+
   return (
     <BodyContainer>
       <BgImg src={noteBg} />
@@ -45,7 +44,7 @@ const Posts = () => {
       <PostList>
         {posts.map((post) => (
           <>
-            <Post key={post.id} post={post}></Post>
+            <Post key={post.id} post={post} username={username}></Post>
           </>
         ))}
       </PostList>
