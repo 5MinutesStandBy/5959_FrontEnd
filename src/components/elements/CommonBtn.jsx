@@ -1,22 +1,19 @@
 import styled from "styled-components";
 
 export const CommonBtn = styled.button`
-  position: absolute;
-  padding: 5px;
-  border-radius: 10px;
-
-  //font
+  //폰트
   font-family: "Y_Spotlight";
   font-size: ${({ fs }) => (fs ? fs : "15px")};
   font-weight: 700;
   text-align: center;
 
-  //size
+  //사이즈
   width: ${({ width }) => (width ? width : "")};
   height: ${({ height }) => (height ? height : "")};
   box-sizing: border-box;
 
-  //위치
+  //포지션
+  position: absolute;
   top: ${({ top }) => (top ? top : "")};
   right: ${({ right }) => (right ? right : "")};
   left: ${({ left }) => (left ? left : "")};
@@ -31,7 +28,9 @@ export const CommonBtn = styled.button`
   //테두리, 글자색 같게
   border: 2px solid ${({ color }) => (color ? color : "")};
   color: ${({ color }) => (color ? color : "")};
+  border-radius: 10px;
 
+  padding: 5px;
   margin: ${({ mg }) => (mg ? mg : "")};
   box-shadow: ${({ bs }) => (bs ? bs : "")};
   cursor: pointer;

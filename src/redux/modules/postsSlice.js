@@ -1,13 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const headers = {
-  'Content-Type': 'multipart/form-data',
-  'Authorization': sessionStorage.getItem("token"),
-  'withCredentials': true,
-  //'Refresh-Token': cookies.load("refresh-token")
-}
-
 const initialState = {
   posts: [],
   error: null,
@@ -19,8 +12,8 @@ export const __getPosts = createAsyncThunk(
   "Post/getPosts",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get("http://localhost:3001/boards");
-      return thunkAPI.fulfillWithValue(data.data);
+      const data = await axios.get("http://13.125.2.119:8080/api/boards");
+      return thunkAPI.fulfillWithValue(data.data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -31,8 +24,13 @@ export const __addPosts = createAsyncThunk(
   "Post/addPosts",
   async (payload, thunkAPI) => {
     try {
-       axios.post("http://13.125.2.119:8080/api/boards", payload);
-      console.log(payload)
+      axios.post("http://13.125.2.119:8080/api/boards", payload, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+          "Refresh-Token": localStorage.getItem("refresh-Token"),
+          "Content-Type": "application/json",
+        },
+      });
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -44,7 +42,7 @@ export const __deletePosts = createAsyncThunk(
   "Post/deletePosts",
   async (payload, thunkAPI) => {
     try {
-      axios.delete(`http://localhost:3001/boards/${payload}`);
+      axios.delete(`http://13.125.2.119:8080/api/boards/${payload}`);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -64,7 +62,6 @@ const postsSlice = createSlice({
     [__getPosts.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.posts = action.payload;
-      state.posts.sort((a, b) => b.id - a.id);
     },
     [__getPosts.rejected]: (state, action) => {
       state.isLoading = false;

@@ -6,6 +6,7 @@ import AddPost from "../pages/addpost/AddPost";
 import Posts from "../pages/posts/Posts";
 import Detail from "../pages/detail/Detail";
 import Signup from "../pages/signup/Signup";
+import Mypage from "../pages/mypage/Mypage";
 
 const Router = () => {
   return (
@@ -17,6 +18,7 @@ const Router = () => {
           <Route path="boards/:id" element={<Detail />} />
           <Route path="addpost" element={<AddPost />} />
           <Route path="signup" element={<Signup />} />
+          <Route path="mypage" element={<Mypage />} />
         </Route>
       </Routes>
     </BrowserRouter>

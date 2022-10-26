@@ -18,8 +18,8 @@ const Post = ({ post }) => {
     <>
       <StPost key={post.id}>
         <PostImg src={kingOgu}></PostImg>
-        <PostTitle>{post.name} 님을 칭찬합니다 왇</PostTitle>
-        <Postdesc>{post.desc}</Postdesc>
+        <PostTitle>{post.title} 님을 칭찬합니다 왇</PostTitle>
+        <Postdesc>{post.content}</Postdesc>
         <OpenCommentBtn
           onClick={() => {
             navigate(`/boards/${post.id}`);

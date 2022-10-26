@@ -61,15 +61,12 @@ const Signup = () => {
       return alert("모든 항목을 입력해주세요.");
     }
     console.log(userInfo);
-    dispatch(__addUser1(userInfo));
-    // dispatch(__addUser2(userInfo));
+    // dispatch(__addUser1(userInfo));
+    dispatch(__addUser2({ userInfo, navigate }));
 
     setUsername("");
     setPassword("");
     setRePass("");
-
-    alert("회원가입이 완료되었습니다");
-    navigate("/");
   };
 
   const CheckIdClickHandler = () => {
