@@ -1,13 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const headers = {
-  'Content-Type': 'multipart/form-data',
-  'Authorization': sessionStorage.getItem("token"),
-  'withCredentials': true,
-  //'Refresh-Token': cookies.load("refresh-token")
-}
-
 const initialState = {
   posts: [],
   error: null,

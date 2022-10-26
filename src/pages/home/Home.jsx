@@ -33,10 +33,7 @@ const UnLoginMain = () => {
       username: username,
       password: password,
     };
-
     setisClicked(true);
-
-    console.log(userInfo);
     dispatch(__CheckUser({ userInfo, navigate }));
 
 

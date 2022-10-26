@@ -66,9 +66,6 @@ const Signup = () => {
     setUsername("");
     setPassword("");
     setRePass("");
-
-    alert("회원가입이 완료되었습니다");
-    navigate("/");
   };
 
   const CheckIdClickHandler = () => {
