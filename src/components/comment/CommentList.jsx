@@ -1,16 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import {
   __deleteComment,
+  __getCommentById,
   __updateComment,
 } from "../../redux/modules/commentSlice";
+import { __getPost } from "../../redux/modules/postSlice";
 
 const CommentList = ({ comment }) => {
-  const data = useSelector((state) => state.comment.comments.data);
+  const data = useSelector((state) => state.post.board.commentList);
+  const userData = useSelector((state)=>state.signin.checkusers)
   const [edit, setEdit] = useState(false);
   const [reply, setReply] = useState(comment.content);
   const dispatch = useDispatch();
+  const {id} = useParams();
+  useEffect(()=>{
+    dispatch(__getPost(id))
+    dispatch(__getCommentById(id))
+  },[])
+
+  console.log(comment)
 
   const editHandler = () => {
     if (reply.trim() === "") {
@@ -27,6 +38,7 @@ const CommentList = ({ comment }) => {
     }
   };
 
+
   const changeReply = (e) => {
     setReply(e.target.value);
   };
@@ -42,6 +54,9 @@ const CommentList = ({ comment }) => {
             <StComment>{comment.content}</StComment>
           </StCommentBox>
           <StBox>
+            
+          {localStorage.getItem("username") === comment.author ? (
+            <>
             <StEdit onClick={editHandler}>수정</StEdit>
             <StDel onClick={deleteHandler}>삭제</StDel>
             <div>
@@ -49,7 +64,8 @@ const CommentList = ({ comment }) => {
             </div>
             <div>
               💔<span>0</span>
-            </div>
+            </div> 
+            </>) : null}
           </StBox>
         </StCommentList>
        ) : 

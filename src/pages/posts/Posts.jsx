@@ -21,6 +21,7 @@ const Posts = () => {
     dispatch(__getUsername());
   }, [dispatch]);
 
+
   const username = useSelector((state) => console.log(state.signin.username));
 
   if (isLoading === true) {

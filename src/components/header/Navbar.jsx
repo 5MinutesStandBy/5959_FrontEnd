@@ -9,6 +9,14 @@ import logoutUser from "../../redux/modules/signinSlice";
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+  // const nav = () => {
+  //   if(localStorage.token !== ''){
+  //     navigate("/boards")
+  //   }else{
+  //     navigate('')
+  //   }
+  // }
 
   const token = localStorage.getItem("token");
   const ToMypage = () => {

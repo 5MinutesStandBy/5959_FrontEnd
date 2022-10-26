@@ -16,7 +16,8 @@ const UnLoginMain = () => {
   const [password, setPassword] = useState("");
   const [isClicked, setisClicked] = useState(false);
 
-
+  const key = localStorage?.getItem('token')
+  console.log(key)
 
   const changeIdHandler = (e) => {
     setUsername(e.target.value);

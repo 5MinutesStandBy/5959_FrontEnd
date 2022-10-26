@@ -9,7 +9,6 @@ export const __getPost = createAsyncThunk(
       const { data } = await axios.get(
         `http://13.125.2.119:8080/api/boards/${payload}`
       );
-      console.log(data.data)
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
