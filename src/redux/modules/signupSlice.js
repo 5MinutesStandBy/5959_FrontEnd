@@ -13,7 +13,7 @@ export const __addUser = createAsyncThunk(
   "User/addUser",
   async (payload, thunkAPI) => {
     const resData = await axios
-      .post(`http://localhost:3001/signup`, payload)
+      .post(`http://13.125.2.119/api/auth/signup`, payload)
       .then((res) => res.data)
       .catch((err) => console.err(err));
     return thunkAPI.fulfillWithValue(resData);

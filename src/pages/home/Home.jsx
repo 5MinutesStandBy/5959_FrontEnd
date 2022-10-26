@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { BodyContainer } from "../../components/elements/BodyContainer";
 import { Button } from "../../components/elements/Button";
+import { login } from "../../redux/modules/signinSlice";
 import oguMain from "../../static/images/안녕오구.png";
 
 const UnLoginMain = () => {

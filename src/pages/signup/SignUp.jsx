@@ -119,11 +119,14 @@ export default Signup;
 
 const StOverLap = styled.div`
   display: flex;
+
+
   & span {
     font-size: 10px;
     position: absolute;
-    right: 650px;
+    right:-60px;
     cursor: pointer;
+    width:50px;
   }
 `;
 
@@ -198,6 +201,7 @@ const StIdBox = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  position : relative;
 `;
 
 const StIdInput = styled.input`
