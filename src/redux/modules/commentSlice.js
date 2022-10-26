@@ -6,7 +6,7 @@ export const __addComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.post(
-        "http://localhost:3001/comments",
+        "http://13.125.2.119:8080/api/comments",
         payload
       );
       return thunkAPI.fulfillWithValue(data);
@@ -21,7 +21,7 @@ export const __deleteComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.delete(
-        `http://localhost:3001/comments/${payload}`
+        `http://13.125.2.119:8080/api/comments/${payload}`
       );
       return thunkAPI.fulfillWithValue(payload);
     } catch (e) {

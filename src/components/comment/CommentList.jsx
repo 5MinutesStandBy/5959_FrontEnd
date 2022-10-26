@@ -52,7 +52,7 @@ const CommentList = ({ comment }) => {
             </div>
           </StBox>
         </StCommentList>
-      ) : (
+       ) : 
         <StCommentList>
           <StCommentBox>
             <StCommentInput onChange={changeReply} value={reply} />
@@ -61,7 +61,7 @@ const CommentList = ({ comment }) => {
             <StEdit onClick={editHandler}>저장</StEdit>
           </StBox>
         </StCommentList>
-      )}
+}
     </>
   );
 };

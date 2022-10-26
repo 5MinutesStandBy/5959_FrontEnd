@@ -14,11 +14,11 @@ const initialState = {
 export const __addUser1 = createAsyncThunk(
   "Users/addUser",
   async (payload, thunkAPI) => {
-    console.log(payload);
     const resData = await axios
       .post(`http://13.125.2.119/api/auth/signup`, payload)
-      .then((res) => console.log(res.data))
+      .then((res) => res.data)
       .catch((err) => console.err(err));
+      console.log(resData)
     return thunkAPI.fulfillWithValue(resData);
   }
 );

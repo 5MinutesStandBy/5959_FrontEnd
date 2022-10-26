@@ -14,7 +14,6 @@ import CommentList from "../../components/comment/CommentList";
 
 const Detail = () => {
   const postData = useSelector((state) => state.post.board);
-
   const commentsData = useSelector((state) => state.comment.comments.data);
   const [edit, setEdit] = useState(false);
   const todo = useSelector((state) => state.post.todo);
@@ -22,7 +21,7 @@ const Detail = () => {
   const dispatch = useDispatch();
 
   const { id } = useParams();
-
+  console.log(postData)
   const initialState = {
     content: "",
     postId: id,
@@ -34,7 +33,7 @@ const Detail = () => {
   }, [dispatch, id, todo]);
 
   const [comment, setComment] = useState(initialState);
-  const [content, setContent] = useState(postData.desc);
+  const [content, setContent] = useState(postData.content);
 
   const commentChange = (e) => {
     setComment({ ...comment, content: e.target.value, postId: id, id: "" });
@@ -63,9 +62,8 @@ const Detail = () => {
     } else {
       dispatch(
         __updatePost({
-          user: postData.user,
-          name: postData.name,
-          desc: content,
+          title: postData.title,
+          content: content,
           id: postData.id,
         })
       );
@@ -79,13 +77,13 @@ const Detail = () => {
       {!edit ? (
         <BodyContainer style={{ flexDirection: "column" }}>
           <StTitle>
-            <StText>{postData.name}</StText>
+            <StText>{postData.title}</StText>
             <StEdit onClick={changeEdit}>수정</StEdit>
           </StTitle>
           <StDetailBox>
             <StContent>
               <StImg src={boardOgu} />
-              <span>{postData.desc}</span>
+              <span>{postData.content}</span>
             </StContent>
           </StDetailBox>
           <StComment>
@@ -103,7 +101,7 @@ const Detail = () => {
       ) : (
         <BodyContainer style={{ flexDirection: "column" }}>
           <StTitle>
-            <StText>{postData.name}</StText>
+            <StText>{postData.title}</StText>
             <StEdit onClick={updatePost}>수정 완료</StEdit>
           </StTitle>
           <StDetailBox>
