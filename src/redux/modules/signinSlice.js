@@ -9,25 +9,37 @@ import { setCookie, getCookie, removeCookie } from "../../shared/cookie";
 // InitialState
 const initialState = {
   checkusers: [],
+  username: [],
   loading: false,
   error: null,
-  };
+};
+
+export const __getUsername = createAsyncThunk(
+  "Users/getusername",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.post(`http://13.125.2.119/api/mypage/userinfo`, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+          "Refresh-Token": localStorage.getItem("refresh-token"),
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(data);
+      return thunkAPI.fulfillWithValue(data.data.username);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 // 로그인 Thunk - 데이터를 보내기만하면 존재하는지 검사해서
 // true or false? 아니면 토큰을 주시는걸까용?
-
-
-console.log(initialState.checkusers)
-
-// 로그인 요청(체크)
 
 export const __CheckUser = createAsyncThunk(
   "Users/loginUser",
   async ({ userInfo, navigate }, thunkAPI) => {
     try {
-      const data = await axios.post(
-        `http://13.125.2.119/api/auth/login`,
-        userInfo
-      );
       const data = await axios.post(`http://13.125.2.119/api/login`, userInfo);
       console.log(data);
 
@@ -35,7 +47,6 @@ export const __CheckUser = createAsyncThunk(
       localStorage.setItem("refresh-token",data.headers.refreshtoken)
       localStorage.setItem("username", data.data.data.username)
       navigate("/boards")
-        console.log(data)
       return thunkAPI.fulfillWithValue(data.data);
 
       if (data.data.success === true) {
@@ -51,32 +62,6 @@ export const __CheckUser = createAsyncThunk(
   }
 );
 
-// const logOut = async () => {
-//   const contest = window.confirm("정말 로그아웃 하실건가요?");
-//   if (contest === true) {
-//     const Refreshtoken = localStorage.getItem("refreshToken");
-//     const Authorization = localStorage.getItem("authorization");
-//     const headers = {
-//       "Content-Type": "application/json",
-//       Authorization: `${Authorization}`,
-//       Refreshtoken: `${Refreshtoken}`,
-//     };
-//     const url = "http://warmwinter.co.kr/api/member/logout";
-//     axios.post(
-//       url,
-//       {},
-//       {
-//         headers: headers,
-//       }
-//     );
-//     window.localStorage.clear();
-//     navigate("/main");
-//     setModalOpen(false);
-//   } else if (contest === false) {
-//     return;
-//   }
-// };
-
 // 슬라이스
 export const LoginSlice = createSlice({
   name: "signin",
@@ -85,6 +70,7 @@ export const LoginSlice = createSlice({
     //로그아웃시
     logoutUser: (state, payload) => {
       state.checkusers = { success: false };
+      state.username = "";
     },
   },
   extraReducers: {
@@ -98,6 +84,10 @@ export const LoginSlice = createSlice({
     [__CheckUser.rejected]: (state, action) => {
       state.loading = false;
       console.log(action.payload);
+    },
+    [__getUsername.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.username = action.payload;
     },
   },
 });

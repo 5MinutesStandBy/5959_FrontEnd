@@ -4,6 +4,7 @@ import post from "../modules/postSlice";
 import comment from "../modules/commentSlice";
 import signup from "../modules/signupSlice";
 import signin from "../modules/signinSlice";
+import myposts from "../modules/mypageSlice";
 
 const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ const store = configureStore({
     post,
     comment,
     signup,
-    signin
+    signin,
+    myposts,
   },
 });
 
