@@ -25,8 +25,13 @@ const Posts = () => {
 
   if (error) {
     return <div>에러가 발생했어요ㅠㅠ</div>;
-  }
 
+    if(localStorage.token && navigate(-1)){
+      navigate("/boards")
+
+    }
+  }
+  
   return (
     <BodyContainer>
       <BgImg src={noteBg} />

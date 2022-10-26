@@ -5,7 +5,11 @@ import styled from "styled-components";
 import { BodyContainer } from "../../components/elements/BodyContainer";
 import { Button } from "../../components/elements/Button";
 import oguMain from "../../static/images/안녕오구.png";
-import { __addUser } from "../../redux/modules/signupSlice";
+import {
+  __addUser1,
+  __addUser2,
+  __CheckUserId,
+} from "../../redux/modules/signupSlice";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -14,8 +18,16 @@ const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rePass, setRePass] = useState("");
+  const [idCheck, setIdCheck] = useState(false);
+
   const [isLogin, setIsLogin] = useState(false);
   const [isClick, setIsClick] = useState(false);
+
+  let userInfo = {
+    username: username,
+    password: password,
+    passwordConfirm: rePass,
+  };
 
   const changeIdHandler = (e) => {
     setUsername(e.target.value);
@@ -41,15 +53,29 @@ const Signup = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    if (
+      username.trim() === "" ||
+      password.trim() === "" ||
+      rePass.trim() === ""
+    ) {
+      return alert("모든 항목을 입력해주세요.");
+    }
+    console.log(userInfo);
+    dispatch(__addUser1(userInfo));
+    // dispatch(__addUser2(userInfo));
+    setUsername("");
+    setPassword("");
+    setRePass("");
 
-    let userInfo = {
-      username: username,
-      password: password,
-      passwordConfirm: rePass,
-    };
-
-    dispatch(__addUser(userInfo));
+    alert("회원가입이 완료되었습니다");
     navigate("/");
+  };
+
+  const CheckIdClickHandler = () => {
+    if (username.trim() === "") {
+      return alert("아이디를 입력해주세요");
+    }
+    dispatch(__CheckUserId({ userInfo, setIdCheck }));
   };
 
   return (
@@ -68,7 +94,7 @@ const Signup = () => {
                 onChange={changeIdHandler}
                 minLengt={7}
               />
-              <span>중복확인</span>
+              <span onClick={CheckIdClickHandler}>중복확인</span>
             </StOverLap>
             {username.trim() === "" && isClick ? (
               <StIdIn>7자리 이상의 아이디를 입력해주세요</StIdIn>
@@ -86,13 +112,13 @@ const Signup = () => {
             ) : null}
           </StPassBox>
           <STRePassBox>
-           { <span>비밀번호 재확인</span>}
+            {<span>비밀번호 재확인</span>}
             <StRePassInput
               onChange={changeRePass}
               type="password"
               minLengt={8}
             />
-            {(rePass.trim() === "" || password !== rePass) && isClick  ? (
+            {(rePass.trim() === "" || password !== rePass) && isClick ? (
               <StRePassIn>비밀번호가 일치하지 않습니다</StRePassIn>
             ) : null}
           </STRePassBox>
@@ -122,6 +148,7 @@ const StOverLap = styled.div`
 
 
   & span {
+    width: 50px;
     font-size: 10px;
     position: absolute;
     right:-60px;
@@ -198,6 +225,7 @@ const StPassBox = styled.div`
 `;
 
 const StIdBox = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   margin: 0 auto;

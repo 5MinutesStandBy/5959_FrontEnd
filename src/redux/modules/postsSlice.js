@@ -19,8 +19,8 @@ export const __getPosts = createAsyncThunk(
   "Post/getPosts",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get("http://localhost:3001/boards");
-      return thunkAPI.fulfillWithValue(data.data);
+      const data = await axios.get("http://13.125.2.119:8080/api/boards");
+      return thunkAPI.fulfillWithValue(data.data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -31,7 +31,14 @@ export const __addPosts = createAsyncThunk(
   "Post/addPosts",
   async (payload, thunkAPI) => {
     try {
-       axios.post("http://13.125.2.119:8080/api/boards", payload);
+       axios.post("http://13.125.2.119:8080/api/boards", payload = {title : payload.name, content : payload.desc},
+       {
+        headers: {
+        Authorization: localStorage.getItem("token"),
+        "Refresh-Token": localStorage.getItem("refresh-token"),
+        "Content-Type": "application/json",
+        },
+        });
       console.log(payload)
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
@@ -44,7 +51,7 @@ export const __deletePosts = createAsyncThunk(
   "Post/deletePosts",
   async (payload, thunkAPI) => {
     try {
-      axios.delete(`http://localhost:3001/boards/${payload}`);
+      axios.delete(`http://13.125.2.119:8080/api/boards/${payload}`);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -64,7 +71,6 @@ const postsSlice = createSlice({
     [__getPosts.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.posts = action.payload;
-      state.posts.sort((a, b) => b.id - a.id);
     },
     [__getPosts.rejected]: (state, action) => {
       state.isLoading = false;

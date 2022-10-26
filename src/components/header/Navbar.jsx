@@ -7,10 +7,13 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   return (
+    <>
     <StNav onClick={() => navigate("/")}>
       <StImg src={babyOgu} />
       <StTitle>OGU OGU</StTitle>
     </StNav>
+    <div>sdsdsdsd</div>
+    </>
     //토큰 있는 경우 로그아웃 버튼
   );
 };

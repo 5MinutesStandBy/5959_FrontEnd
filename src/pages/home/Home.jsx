@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { BodyContainer } from "../../components/elements/BodyContainer";
 import { Button } from "../../components/elements/Button";
-import { login } from "../../redux/modules/signinSlice";
+import { __CheckUser } from "../../redux/modules/signinSlice";
 import oguMain from "../../static/images/안녕오구.png";
+import { HistoryRouterProps } from "react-router-dom";
 
 const UnLoginMain = () => {
   const navigate = useNavigate();
@@ -13,9 +14,9 @@ const UnLoginMain = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(false);
-
   const [isClicked, setisClicked] = useState(false);
+
+
 
   const changeIdHandler = (e) => {
     setUsername(e.target.value);
@@ -25,25 +26,20 @@ const UnLoginMain = () => {
     setPassword(e.target.value);
   };
 
-  // const isNotNullHandler = () => {
-  //   if (username.trim() === "" || password.trim() === "") {
-  //     return;
-  //   } else {
-  //   }
-  // };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-
-    console.log("username", username);
-    console.log("password", password);
-
     let userInfo = {
       username: username,
       password: password,
     };
 
-    dispatch();
+    setisClicked(true);
+
+    console.log(userInfo);
+    dispatch(__CheckUser({ userInfo, navigate }));
+
+
   };
 
   const clickHandler = () => {
@@ -85,7 +81,7 @@ const UnLoginMain = () => {
                 <StPassIn>8자리 이상의 비밀번호를 입력해주세요</StPassIn>
               ) : null}
             </StPassBox>
-            <StBtn type="submit" onClick={clickHandler}>
+            <StBtn type="submit" onClick={onSubmitHandler}>
               로그인
             </StBtn>
             <StSignIn onClick={toSignIn}>아직 회원이 아니세요?</StSignIn>
