@@ -15,7 +15,7 @@ const AddPost = () => {
 
   // 유저명으로 삭제 제한시 유저명 받아와서 지정해주기
   const [post, setPost] = useState({
-    user: "bora",
+    // user: "bora",
     name: "",
     desc: "",
   });

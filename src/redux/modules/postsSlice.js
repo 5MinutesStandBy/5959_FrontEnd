@@ -1,6 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const headers = {
+  'Content-Type': 'multipart/form-data',
+  'Authorization': sessionStorage.getItem("token"),
+  'withCredentials': true,
+  //'Refresh-Token': cookies.load("refresh-token")
+}
+
 const initialState = {
   posts: [],
   error: null,
@@ -24,7 +31,8 @@ export const __addPosts = createAsyncThunk(
   "Post/addPosts",
   async (payload, thunkAPI) => {
     try {
-      axios.post("http://localhost:3001/boards", payload);
+       axios.post("http://13.125.2.119:8080/api/boards", payload);
+      console.log(payload)
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

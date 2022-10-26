@@ -81,18 +81,18 @@ const Signup = () => {
               onChange={changePasswordHandler}
               minLength={8}
             />
-            {password.trim() === "" ? (
+            {password.trim() === "" && isClick ? (
               <StPassIn>8자리 이상의 비밀번호를 입력해주세요</StPassIn>
             ) : null}
           </StPassBox>
           <STRePassBox>
-            <span>비밀번호 재확인</span>
+           { <span>비밀번호 재확인</span>}
             <StRePassInput
               onChange={changeRePass}
               type="password"
               minLengt={8}
             />
-            {rePass.trim() === "" || password !== rePass ? (
+            {(rePass.trim() === "" || password !== rePass) && isClick  ? (
               <StRePassIn>비밀번호가 일치하지 않습니다</StRePassIn>
             ) : null}
           </STRePassBox>
@@ -122,7 +122,7 @@ const StOverLap = styled.div`
   & span {
     font-size: 10px;
     position: absolute;
-    right: 400px;
+    right: 650px;
     cursor: pointer;
   }
 `;
