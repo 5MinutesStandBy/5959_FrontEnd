@@ -16,17 +16,27 @@ const initialState = {
 // true or false? 아니면 토큰을 주시는걸까용?
 
 
+console.log(initialState.checkusers)
+
 // 로그인 요청(체크)
+
 export const __CheckUser = createAsyncThunk(
   "Users/loginUser",
   async ({ userInfo, navigate }, thunkAPI) => {
     try {
+      const data = await axios.post(
+        `http://13.125.2.119/api/auth/login`,
+        userInfo
+      );
       const data = await axios.post(`http://13.125.2.119/api/login`, userInfo);
       console.log(data);
 
       localStorage.setItem("token",data.headers.authorization)
       localStorage.setItem("refresh-token",data.headers.refreshtoken)
+      localStorage.setItem("username", data.data.data.username)
       navigate("/boards")
+        console.log(data)
+      return thunkAPI.fulfillWithValue(data.data);
 
       if (data.data.success === true) {
         alert("로그인 성공");
@@ -84,7 +94,6 @@ export const LoginSlice = createSlice({
     [__CheckUser.fulfilled]: (state, action) => {
       state.loading = false;
       state.checkusers = action.payload;
-      console.log(action.payload);
     },
     [__CheckUser.rejected]: (state, action) => {
       state.loading = false;

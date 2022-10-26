@@ -44,7 +44,14 @@ export const __deletePosts = createAsyncThunk(
   "Post/deletePosts",
   async (payload, thunkAPI) => {
     try {
-      axios.delete(`http://13.125.2.119:8080/api/boards/${payload}`);
+      axios.delete(`http://13.125.2.119:8080/api/boards/${payload}`,
+      {
+        headers: {
+        Authorization: localStorage.getItem("token"),
+        "Refresh-Token": localStorage.getItem("refresh-token"),
+        "Content-Type": "application/json",
+        },
+        });
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

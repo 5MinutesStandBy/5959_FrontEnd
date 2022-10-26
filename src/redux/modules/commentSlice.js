@@ -7,7 +7,14 @@ export const __addComment = createAsyncThunk(
     try {
       const { data } = await axios.post(
         "http://13.125.2.119:8080/api/comments",
-        payload
+        payload = {board_id : payload.postId, content : payload.content},
+        {
+            headers: {
+            Authorization: localStorage.getItem("token"),
+            "Refresh-Token": localStorage.getItem("refresh-token"),
+            "Content-Type": "application/json",
+            },
+            }
       );
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
@@ -21,7 +28,14 @@ export const __deleteComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.delete(
-        `http://13.125.2.119:8080/api/comments/${payload}`
+        `http://13.125.2.119:8080/api/comments/${payload}`,
+        {
+            headers: {
+            Authorization: localStorage.getItem("token"),
+            "Refresh-Token": localStorage.getItem("refresh-token"),
+            "Content-Type": "application/json",
+            },
+            }
       );
       return thunkAPI.fulfillWithValue(payload);
     } catch (e) {
@@ -35,7 +49,14 @@ export const __getCommentById = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:3001/comments?postId=${payload}`
+        `http://13.125.2.119:8080/api/comments?board_id=${payload}`,
+        {
+            headers: {
+            Authorization: localStorage.getItem("token"),
+            "Refresh-Token": localStorage.getItem("refresh-token"),
+            "Content-Type": "application/json",
+            },
+            }
       );
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
@@ -48,7 +69,16 @@ export const __updateComment = createAsyncThunk(
     "UPDATE_COMMENT",
     async (payload,thunkAPI)=>{
         try{
-            const {data} = await axios(`http://localhost:3001/comments/${payload.id}`,payload)
+            const {id} = payload
+            const payloadContent = payload.content
+            const {data} = await axios.put(`http://13.125.2.119:8080/api/comments/${id}`, {content : payloadContent},
+            {
+                headers: {
+                Authorization: localStorage.getItem("token"),
+                "Refresh-Token": localStorage.getItem("refresh-token"),
+                "Content-Type": "application/json",
+                },
+                })
             return thunkAPI.fulfillWithValue(payload)
         }catch(e){
             return thunkAPI.rejectWithValue(e.code)
@@ -90,7 +120,7 @@ export const commentSlice = createSlice({
 
     [__deleteComment.fulfilled]:(state,action)=>{
         const target = state.comments.data.filter((comment)=>{
-            return comment.id !== action.payload
+            return comment.id !== action.payload.id
         })
         state.comments.data = target
     },

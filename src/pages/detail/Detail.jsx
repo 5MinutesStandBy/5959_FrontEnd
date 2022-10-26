@@ -14,14 +14,15 @@ import CommentList from "../../components/comment/CommentList";
 
 const Detail = () => {
   const postData = useSelector((state) => state.post.board);
-  const commentsData = useSelector((state) => state.comment.comments.data);
+  const commentsData = useSelector((state) => state.post.board.commentList);
   const [edit, setEdit] = useState(false);
   const todo = useSelector((state) => state.post.todo);
+  const comments = useSelector((state)=>state.comment.comments.data)
 
   const dispatch = useDispatch();
 
+  console.log(commentsData)
   const { id } = useParams();
-  console.log(postData)
   const initialState = {
     content: "",
     postId: id,
@@ -30,7 +31,7 @@ const Detail = () => {
   useEffect(() => {
     dispatch(__getPost(id));
     dispatch(__getCommentById(id));
-  }, [dispatch, id, todo]);
+  }, [dispatch, comments]);
 
   const [comment, setComment] = useState(initialState);
   const [content, setContent] = useState(postData.content);
@@ -94,7 +95,7 @@ const Detail = () => {
             />
             <StAdd onClick={addComment}>추가</StAdd>
           </StComment>
-          {commentsData.map((comment) => (
+          {commentsData?.map((comment) => (
             <CommentList key={comment.id} comment={comment} />
           ))}
         </BodyContainer>
@@ -116,7 +117,7 @@ const Detail = () => {
             />
             <StAdd onClick={addComment}>추가</StAdd>
           </StComment>
-          {commentsData.map((comment) => (
+          {postData.commentList.map((comment) => (
             <CommentList key={comment.id} comment={comment} />
           ))}
         </BodyContainer>
