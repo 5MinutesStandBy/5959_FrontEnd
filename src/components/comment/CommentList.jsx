@@ -11,17 +11,17 @@ import { __getPost } from "../../redux/modules/postSlice";
 
 const CommentList = ({ comment }) => {
   const data = useSelector((state) => state.post.board.commentList);
-  const userData = useSelector((state)=>state.signin.checkusers)
+  const userData = useSelector((state) => state.signin.checkusers);
   const [edit, setEdit] = useState(false);
   const [reply, setReply] = useState(comment.content);
-  const [good,setGood] = useState(false);
-  const [bad,setBad] = useState(false);
+  const [good, setGood] = useState(false);
+  const [bad, setBad] = useState(false);
   const dispatch = useDispatch();
-  const {id} = useParams();
-  useEffect(()=>{
-    dispatch(__getPost(id))
-    dispatch(__getCommentById(id))
-  },[])
+  const { id } = useParams();
+  useEffect(() => {
+    dispatch(__getPost(id));
+    dispatch(__getCommentById(id));
+  }, []);
 
   const editHandler = () => {
     if (reply.trim() === "") {
@@ -38,7 +38,6 @@ const CommentList = ({ comment }) => {
     }
   };
 
-
   const changeReply = (e) => {
     setReply(e.target.value);
   };
@@ -48,14 +47,12 @@ const CommentList = ({ comment }) => {
   };
 
   const goodHandler = () => {
-    setGood(!good)
-  }
-
-
+    setGood(!good);
+  };
 
   const badHandler = () => {
-    setBad(!bad)
-  }
+    setBad(!bad);
+  };
   return (
     <>
       {!edit ? (
@@ -64,29 +61,51 @@ const CommentList = ({ comment }) => {
             <StComment>{comment.content}</StComment>
           </StCommentBox>
           <StBox>
-            
-          {localStorage.getItem("username") === comment.author ? (
-            <>
-            <StEdit onClick={editHandler}>수정</StEdit>
-            <StDel onClick={deleteHandler}>삭제</StDel>
-            {bad ?
-            null :
-            <>
-            <div>
-            { !good ? <GoodDiv onClick={goodHandler}>🤍<span>0</span></GoodDiv> : <GoodDiv onClick={goodHandler} style={{marginLeft : "53.7px"}}>❤️<span>0</span></GoodDiv>}
-            </div>
-            </>}
-            {good ? 
-            null : 
-            <>
-            <div>
-            { !bad ? <BadDiv onClick={badHandler}>🤍<span>0</span></BadDiv> : <BadDiv onClick={badHandler} style={{marginLeft : "53.7px"}}>💔<span>0</span></BadDiv>}
-            </div>
-            </>} 
-            </>) : null}
+            {localStorage.getItem("username") === comment.author ? (
+              <>
+                <StEdit onClick={editHandler}>수정</StEdit>
+                <StDel onClick={deleteHandler}>삭제</StDel>
+                {bad ? null : (
+                  <>
+                    <div>
+                      {!good ? (
+                        <GoodDiv onClick={goodHandler}>
+                          🤍<span>0</span>
+                        </GoodDiv>
+                      ) : (
+                        <GoodDiv
+                          onClick={goodHandler}
+                          style={{ marginLeft: "53.7px" }}
+                        >
+                          ❤️<span>0</span>
+                        </GoodDiv>
+                      )}
+                    </div>
+                  </>
+                )}
+                {good ? null : (
+                  <>
+                    <div>
+                      {!bad ? (
+                        <BadDiv onClick={badHandler}>
+                          🤍<span>0</span>
+                        </BadDiv>
+                      ) : (
+                        <BadDiv
+                          onClick={badHandler}
+                          style={{ marginLeft: "53.7px" }}
+                        >
+                          💔<span>0</span>
+                        </BadDiv>
+                      )}
+                    </div>
+                  </>
+                )}
+              </>
+            ) : null}
           </StBox>
         </StCommentList>
-       ) : 
+      ) : (
         <StCommentList>
           <StCommentBox>
             <StCommentInput onChange={changeReply} value={reply} />
@@ -95,18 +114,16 @@ const CommentList = ({ comment }) => {
             <StEdit onClick={editHandler}>저장</StEdit>
           </StBox>
         </StCommentList>
-}
+      )}
     </>
   );
 };
 
 export default CommentList;
 
-const BadDiv = styled.div`
-`;
+const BadDiv = styled.div``;
 
-const GoodDiv = styled.div`
-`;
+const GoodDiv = styled.div``;
 
 const StCommentInput = styled.input`
   margin-left: 40px;
