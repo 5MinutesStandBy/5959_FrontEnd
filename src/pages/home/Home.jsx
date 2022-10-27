@@ -16,8 +16,6 @@ const UnLoginMain = () => {
   const [password, setPassword] = useState("");
   const [isClicked, setisClicked] = useState(false);
 
-  const key = localStorage?.getItem('token')
-  console.log(key)
 
   const changeIdHandler = (e) => {
     setUsername(e.target.value);
@@ -35,6 +33,10 @@ const UnLoginMain = () => {
       password: password,
     };
     setisClicked(true);
+<<<<<<< HEAD
+
+=======
+>>>>>>> a8a34e259288639f558dc673b439e4c0785d3d23
     dispatch(__CheckUser({ userInfo, navigate }));
 
 
