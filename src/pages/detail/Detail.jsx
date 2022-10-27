@@ -86,9 +86,9 @@ const Detail = () => {
         <BodyContainer style={{ flexDirection: "column" }}>
           <StTitle>
             <StText>{postData.title}</StText>
-            <div>
+            {/* <div>
             { !good ? <GoodDiv onClick={goodHandler}>🤍<span>0</span></GoodDiv> : <GoodDiv onClick={goodHandler} >❤️<span>0</span></GoodDiv>}
-            </div>
+            </div> */}
             <StEdit onClick={changeEdit}>수정</StEdit>
           </StTitle>
           <StDetailBox>

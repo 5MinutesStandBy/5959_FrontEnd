@@ -64,7 +64,7 @@ const Mypage = () => {
             ))}
           </StContent>
         ) : null}
-        <StTitle
+        {/* <StTitle
           left="440px"
           open={open3}
           onClick={() => {
@@ -75,7 +75,7 @@ const Mypage = () => {
         >
           좋아요 한 포스트
         </StTitle>
-        {open3 ? <StContent>좋아요 한 무언가</StContent> : null}
+        {open3 ? <StContent>좋아요 한 무언가</StContent> : null} */}
       </StContainer>
     </BodyContainer>
   );
