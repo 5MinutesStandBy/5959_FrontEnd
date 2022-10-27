@@ -14,6 +14,8 @@ const CommentList = ({ comment }) => {
   const userData = useSelector((state)=>state.signin.checkusers)
   const [edit, setEdit] = useState(false);
   const [reply, setReply] = useState(comment.content);
+  const [good,setGood] = useState(false);
+  const [bad,setBad] = useState(false);
   const dispatch = useDispatch();
   const {id} = useParams();
   useEffect(()=>{
@@ -46,6 +48,16 @@ const CommentList = ({ comment }) => {
   const deleteHandler = () => {
     dispatch(__deleteComment(comment.id));
   };
+
+  const goodHandler = () => {
+    setGood(!good)
+  }
+
+
+
+  const badHandler = () => {
+    setBad(!bad)
+  }
   return (
     <>
       {!edit ? (
@@ -59,12 +71,20 @@ const CommentList = ({ comment }) => {
             <>
             <StEdit onClick={editHandler}>수정</StEdit>
             <StDel onClick={deleteHandler}>삭제</StDel>
+            {bad ?
+            null :
+            <>
             <div>
-              ❤️<span>0</span>
+            { !good ? <GoodDiv onClick={goodHandler}>🤍<span>0</span></GoodDiv> : <GoodDiv onClick={goodHandler} style={{marginLeft : "53.7px"}}>❤️<span>0</span></GoodDiv>}
             </div>
+            </>}
+            {good ? 
+            null : 
+            <>
             <div>
-              💔<span>0</span>
-            </div> 
+            { !bad ? <BadDiv onClick={badHandler}>🤍<span>0</span></BadDiv> : <BadDiv onClick={badHandler} style={{marginLeft : "53.7px"}}>💔<span>0</span></BadDiv>}
+            </div>
+            </>} 
             </>) : null}
           </StBox>
         </StCommentList>
@@ -83,6 +103,12 @@ const CommentList = ({ comment }) => {
 };
 
 export default CommentList;
+
+const BadDiv = styled.div`
+`;
+
+const GoodDiv = styled.div`
+`;
 
 const StCommentInput = styled.input`
   margin-left: 40px;
