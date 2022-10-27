@@ -1,43 +1,103 @@
-//import Thunk
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import api from "../../shared/api";
 
+// InitialState
 const initialState = {
-  signup: [],
+  users: [],
   isLoading: false,
   error: null,
+  checkId : [],
 };
 
-// 회원가입 정보 보내면 true/false
-export const __addUser = createAsyncThunk(
-  "User/addUser",
-  async (payload, thunkAPI) => {
-    const resData = await axios
-      .post(`http://localhost:3001/signup`, payload)
-      .then((res) => res.data)
-      .catch((err) => console.err(err));
-    return thunkAPI.fulfillWithValue(resData);
+// 회원가입 정보 보내면 true/false??
+
+// export const __addUser1 = createAsyncThunk(
+//   "Users/addUser",
+//   async (payload, thunkAPI) => {
+//     const resData = await axios
+//       .post(`http://13.125.2.119/api/auth/signup`, payload)
+//       .then((res) => res.data)
+//       .catch((err) => console.err(err));
+//     console.log(resData);
+//     return thunkAPI.fulfillWithValue(resData);
+//   }
+// );
+
+export const __addUser2 = createAsyncThunk(
+  "Users/addUser",
+  async ({ userInfo, navigate }, thunkAPI) => {
+    try {
+      const data = await axios.post(
+        `http://13.125.2.119/api/auth/signup`,
+        userInfo
+      );
+      if (data.data.success === true) {
+        alert("회원가입이 완료되었습니다!");
+        navigate("/");
+      }
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      if (error.response.data.success === false) {
+        alert(`${error.response.data.errorMessage}`);
+      }
+      return thunkAPI.rejectWithValue(error);
+    }
   }
 );
 
+//아이디중복확인
+export const __CheckUserId = createAsyncThunk(
+  "users/__CheckeUserId",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.post(
+        `http://13.125.2.119/api/auth/checkid`,
+        payload = {username : payload}
+      );
+      console.log(payload);
+      console.log(data);
+      if (data.data.success === true) {
+        alert("사용 가능한 아이디입니다");
+        payload.setIdCheck(data.data.success);
+      }else if(data.data.success === false){
+        alert("이미 있는 아이디입니다")
+      }
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// 슬라이스
 export const SignupSlice = createSlice({
   name: "signup",
   initialState,
   reducers: {},
   extraReducers: {
-    [__addUser.pending]: (state) => {
+    [__addUser2.pending]: (state) => {
       state.isLoading = true;
     },
-    [__addUser.fulfilled]: (state, action) => {
+    [__addUser2.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.signup.username = action.payload.username;
-      state.signup.password = action.payload.password;
-      state.signup.passwordConfirm = action.payload.passwordConfirm;
+      state.users = state.action;
     },
-    [__addUser.rejected]: (state, action) => {
+    [__addUser2.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
+    [__CheckUserId.pending]: (state,action) => {
+      state.isLoading = true;
+    },
+    [__CheckUserId.fulfilled]: (state,action) => {
+      state.isLoading = false;
+      state.checkId = action.payload;
+    },
+    [__CheckUserId.rejected]: (state,action) => {
+      state.isLoading = false;
+      state.error = action.payload
+    }
   },
 });
 

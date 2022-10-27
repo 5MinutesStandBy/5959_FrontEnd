@@ -5,7 +5,11 @@ import styled from "styled-components";
 import { BodyContainer } from "../../components/elements/BodyContainer";
 import { Button } from "../../components/elements/Button";
 import oguMain from "../../static/images/안녕오구.png";
-import { __addUser } from "../../redux/modules/signupSlice";
+import {
+  __addUser1,
+  __addUser2,
+  __CheckUserId,
+} from "../../redux/modules/signupSlice";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -14,8 +18,19 @@ const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rePass, setRePass] = useState("");
+  const [idCheck, setIdCheck] = useState(false);
+
   const [isLogin, setIsLogin] = useState(false);
   const [isClick, setIsClick] = useState(false);
+
+  const checkId = /^([0-9]|[a-z]|[A-Z]|-|_|@|\.){3,12}$/
+  const checkPass = /^([0-9]|[a-z]|[A-Z]|[~!@#$%^&*()+|=]){4,12}$/
+
+  let userInfo = {
+    username: username,
+    password: password,
+    passwordConfirm: rePass,
+  };
 
   const changeIdHandler = (e) => {
     setUsername(e.target.value);
@@ -28,28 +43,37 @@ const Signup = () => {
   const changeRePass = (e) => {
     setRePass(e.target.value);
   };
-  const isNotNullHandler = () => {
-    if (username.trim() === "" || password.trim() === "") {
-      return;
-    } else {
-    }
-  };
 
   const changeClick = () => {
     setIsClick(true);
   };
-
+  console.log(username);
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    setIsClick(true);
+    if (
+      username.trim() === "" ||
+      password.trim() === "" ||
+      rePass.trim() === ""
+    ) {
+      return alert("모든 항목을 입력해주세요.");
+    }
+    if (checkId.test(username) && checkPass.test(password)){
+    dispatch(__addUser2({ userInfo, navigate }));
+    setUsername("");
+    setPassword("");
+    setRePass("");
+  }else{
+    return alert("올바른 형식을 입력해주세요")
+  }
+  };
 
-    let userInfo = {
-      username: username,
-      password: password,
-      passwordConfirm: rePass,
-    };
+  const CheckIdClickHandler = () => {
 
-    dispatch(__addUser(userInfo));
-    navigate("/");
+    if (username.trim() === "") {
+      return alert("아이디를 입력해주세요");
+    }
+    dispatch(__CheckUserId(username));
   };
 
   return (
@@ -67,11 +91,12 @@ const Signup = () => {
                 name="username"
                 onChange={changeIdHandler}
                 minLengt={7}
+                value={username}
               />
-              <span>중복확인</span>
+              <span onClick={CheckIdClickHandler}>중복확인</span>
             </StOverLap>
-            {username.trim() === "" && isClick ? (
-              <StIdIn>7자리 이상의 아이디를 입력해주세요</StIdIn>
+            {(username.trim() === "" && isClick) && !checkId.test(username) ? (
+              <StIdIn>3~12글자 사이의 영어 대/소문자, -,_,@만 사용가능합니다</StIdIn>
             ) : null}
           </StIdBox>
           <StPassBox>
@@ -80,19 +105,21 @@ const Signup = () => {
               type="password"
               onChange={changePasswordHandler}
               minLength={8}
+              value={password}
             />
-            {password.trim() === "" && isClick ? (
-              <StPassIn>8자리 이상의 비밀번호를 입력해주세요</StPassIn>
+            {password.trim() === "" && isClick && !checkPass.test(password)? (
+              <StPassIn>4~12자리 영어 대/소문자, ~!@#$%^&*()+|=만 사용가능합니다</StPassIn>
             ) : null}
           </StPassBox>
           <STRePassBox>
-           { <span>비밀번호 재확인</span>}
+            {<span>비밀번호 재확인</span>}
             <StRePassInput
               onChange={changeRePass}
               type="password"
               minLengt={8}
+              value={rePass}
             />
-            {(rePass.trim() === "" || password !== rePass) && isClick  ? (
+            {(rePass.trim() === "" || password !== rePass) && isClick ? (
               <StRePassIn>비밀번호가 일치하지 않습니다</StRePassIn>
             ) : null}
           </STRePassBox>
@@ -119,11 +146,14 @@ export default Signup;
 
 const StOverLap = styled.div`
   display: flex;
+
   & span {
+    width: 50px;
     font-size: 10px;
     position: absolute;
-    right: 650px;
+    right: -60px;
     cursor: pointer;
+    width: 50px;
   }
 `;
 
@@ -152,11 +182,13 @@ const StRePassInput = styled.input`
 const StPassIn = styled.span`
   font-size: 10px;
   color: blue;
+  width: 200px;
 `;
 
 const StIdIn = styled.span`
   font-size: 10px;
   color: blue;
+  width:200px;
 `;
 
 const StSignIn = styled.span`
@@ -195,9 +227,11 @@ const StPassBox = styled.div`
 `;
 
 const StIdBox = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  position: relative;
 `;
 
 const StIdInput = styled.input`

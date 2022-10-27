@@ -1,105 +1,92 @@
-//import Thunk
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
-//import Cookie - 쿠키를 쓸건지 로컬스토리지 쓸건지??
-import { setCookie, getCookie, removeCookie } from "../../shared/cookie";
+// import jwt_decode from "jwt-decode";
 
 //인스턴스 만들기
-const api = axios.create({
-  baseURL: "http://localhost:3000",
-  headers: {
-    "content-type": "application/json; charset=UTF-8",
-    accept: "application/json,",
-  },
-});
-
-// 로그인 Thunk - 데이터를 보내기만하면 존재하는지 검사해서
-// true or false? 아니면 토큰을 주시는걸까용?
-
-export const login = async (email, pw) => {
-  return await axios
-    .post(
-      `${serverURL}/login/`,
-      {
-        email: email,
-        password: pw,
-      },
-      { withCredentials: true }
-    )
-    .then((response) => {
-      /// token이 필요한 API 요청 시 header Authorization에 token 담아서 보내기
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${response.data.access_token}`;
-      return response.data;
-    })
-    .catch((e) => {
-      console.log(e.response.data);
-      return "이메일 혹은 비밀번호를 확인하세요.";
-    });
+// InitialState
+const initialState = {
+  checkusers: [],
+  username: [],
+  loading: false,
+  error: null,
 };
 
-// export const __signin = createAsyncThunk(
-//   "member/signMember",
-//   async (payload, thunkAPI) => {
-//     const resData = await api
-//       .post(`http://localhost:3000/login`, payload)
-//       .then((res) => res)
-//       .catch((err) => console.err(err));
-//     window.localStorage.setItem(
-//       "authorization",
-//       resData.headers["authorization"].split(" ")[1]
-//     );
-//     window.localStorage.setItem(
-//       "refresh-token",
-//       resData.headers["refresh-token"]
-//     );
-//   }
-// );
-
-// Thunk
-
-export const __signinCheck = createAsyncThunk(
-  "Login/loginCheck",
+export const __getUsername = createAsyncThunk(
+  "Users/getusername",
   async (payload, thunkAPI) => {
     try {
-      const accessToken = cookies.get("Authorization");
-      const data = await axios.get(`/signup`, {
+      const data = await axios.post(`http://13.125.2.119/api/mypage/userinfo`, {
         headers: {
-          Authorization: accessToken,
+          Authorization: localStorage.getItem("token"),
+          "Refresh-Token": localStorage.getItem("refresh-token"),
+          "Content-Type": "application/json",
         },
       });
-      return thunkAPI.fulfillWithValue(data.data);
+      console.log(data);
+      return thunkAPI.fulfillWithValue(data.data.data.username);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-// InitialState
-const initialState = {
-  isLoading: false,
-  isLogin: false,
-};
+// 로그인 Thunk - 데이터를 보내기만하면 존재하는지 검사해서
+// true or false? 아니면 토큰을 주시는걸까용?
 
-export const userSlice = createSlice({
-  name: "login",
+export const __CheckUser = createAsyncThunk(
+  "Users/loginUser",
+  async ({ userInfo, navigate }, thunkAPI) => {
+    try {
+      const data = await axios.post(
+        `http://13.125.2.119/api/auth/checkid`,
+        userInfo
+      );
+      console.log(data);
+      localStorage.setItem("token", data.headers.authorization);
+      localStorage.setItem("refresh-token", data.headers.refreshtoken);
+      localStorage.setItem("username", data.data.data.username);
+      if (data.data.success === true) {
+        alert("로그인 성공");
+        navigate("/boards");
+      }
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      console.log(error);
+      alert("로그인 실패!");
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+// 슬라이스
+export const LoginSlice = createSlice({
+  name: "signin",
   initialState,
-  reducers: {},
+  reducers: {
+    //로그아웃시
+    logoutUser: (state, payload) => {
+      state.checkusers = { success: false };
+      state.username = "";
+    },
+  },
   extraReducers: {
-    [__signinCheck.pending]: (state) => {
-      state.isLoading = true;
+    [__CheckUser.pending]: (state) => {
+      state.loading = true;
     },
-    [__signinCheck.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      state.isLogin = true;
+    [__CheckUser.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.checkusers = action.payload;
     },
-    [__signinCheck.rejected]: (state, action) => {
-      state.isLoading = false;
+    [__CheckUser.rejected]: (state, action) => {
+      state.loading = false;
+      console.log(action.payload);
+    },
+    [__getUsername.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.username = action.payload;
     },
   },
 });
 
-export const {} = userSlice.actions;
-export default userSlice.reducer;
+export const { logOutUser } = LoginSlice.actions;
+export default LoginSlice.reducer;

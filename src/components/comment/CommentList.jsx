@@ -1,18 +1,28 @@
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import {
   __deleteComment,
+  __getCommentById,
   __updateComment,
 } from "../../redux/modules/commentSlice";
+import { __goodHeart } from "../../redux/modules/heartSlice";
+import { __getPost } from "../../redux/modules/postSlice";
 
 const CommentList = ({ comment }) => {
-  const data = useSelector((state) => state.comment.comments.data);
+  const data = useSelector((state) => state.post.board.commentList);
+  const userData = useSelector((state)=>state.signin.checkusers)
   const [edit, setEdit] = useState(false);
   const [reply, setReply] = useState(comment.content);
+  const [good,setGood] = useState(false);
+  const [bad,setBad] = useState(false);
   const dispatch = useDispatch();
-
+  const {id} = useParams();
+  useEffect(()=>{
+    dispatch(__getPost(id))
+    dispatch(__getCommentById(id))
+  },[])
 
   const editHandler = () => {
     if (reply.trim() === "") {
@@ -29,6 +39,7 @@ const CommentList = ({ comment }) => {
     }
   };
 
+
   const changeReply = (e) => {
     setReply(e.target.value);
   };
@@ -36,31 +47,41 @@ const CommentList = ({ comment }) => {
   const deleteHandler = () => {
     dispatch(__deleteComment(comment.id));
   };
+
+  const goodHandler = () => {
+    setGood(!good)
+    dispatch(__goodHeart(id))
+  }
+
+
+
+  const badHandler = () => {
+    setBad(!bad)
+  }
   return (
     <>
-    {!edit ?
+      {!edit ? (
         <StCommentList>
           <StCommentBox>
-            <StComment>
-              {comment.content}
-            </StComment>
+            <StComment>{comment.content}</StComment>
           </StCommentBox>
           <StBox>
+            
+          {localStorage.getItem("username") === comment.author ? (
+            <>
             <StEdit onClick={editHandler}>수정</StEdit>
             <StDel onClick={deleteHandler}>삭제</StDel>
-<<<<<<< HEAD
-=======
-
->>>>>>> 3e9dff8adc4a6243021c988c87ba984c7494660b
+            {bad ?
+            null :
+            <>
             <div>
-              ❤️<span>0</span>
+            { !good ? <GoodDiv onClick={goodHandler}>🤍<span>0</span></GoodDiv> : <GoodDiv onClick={goodHandler} style={{marginLeft : "53.7px"}}>❤️<span>0</span></GoodDiv>}
             </div>
-            <div>
-              💔<span>0</span>
-            </div>
+            </>}
+            </>) : null}
           </StBox>
         </StCommentList>
-      : 
+       ) : 
         <StCommentList>
           <StCommentBox>
             <StCommentInput onChange={changeReply} value={reply} />
@@ -69,57 +90,32 @@ const CommentList = ({ comment }) => {
             <StEdit onClick={editHandler}>저장</StEdit>
           </StBox>
         </StCommentList>
-<<<<<<< HEAD
 }
-=======
-      )}
-
-            <div>❤️<span>0</span></div>
-            <div>💔<span>0</span></div>
-          </StBox>
-        </StCommentList> :
-              <StCommentList>
-                <StCommentBox>
-                  <StCommentInput  onChange={changeReply} value={reply}/>
-                </StCommentBox>
-                <StBox>
-                  <StEdit onClick={editHandler}>저장</StEdit>
-                </StBox>
-              </StCommentList>}
-          
-
->>>>>>> 3e9dff8adc4a6243021c988c87ba984c7494660b
     </>
   );
 };
 
 export default CommentList;
 
+const BadDiv = styled.div`
+`;
+
+const GoodDiv = styled.div`
+`;
+
 const StCommentInput = styled.input`
-<<<<<<< HEAD
   margin-left: 40px;
-=======
-   margin-left : 40px;
->>>>>>> 3e9dff8adc4a6243021c988c87ba984c7494660b
 `;
 
 const StCommentBox = styled.div``;
 
 const StBox = styled.div`
   display: flex;
-<<<<<<< HEAD
   gap: 20px;
-=======
-  gap:20px;
->>>>>>> 3e9dff8adc4a6243021c988c87ba984c7494660b
   margin-right: 10px;
 `;
 const StEdit = styled.div`
   cursor: pointer;
-<<<<<<< HEAD
-=======
-  
->>>>>>> 3e9dff8adc4a6243021c988c87ba984c7494660b
 `;
 
 const StDel = styled.div`
@@ -127,39 +123,20 @@ const StDel = styled.div`
 `;
 
 const StCommentList = styled.div`
-<<<<<<< HEAD
   width: 600px;
   height: 30px;
   line-height: 30px;
   border: 3px solid black;
   border-radius: 10px;
   margin-top: 10px;
-=======
-  width:600px;
-  height: 30px;
-  line-height: 30px;
-  border : 3px solid black;
-  border-radius: 10px;
-  margin-top : 10px;
-
->>>>>>> 3e9dff8adc4a6243021c988c87ba984c7494660b
   background-color: white;
   display: flex;
   justify-content: space-between;
-
   & div {
     cursor: pointer;
   }
 `;
 
 const StComment = styled.div`
-<<<<<<< HEAD
   margin-left: 40px;
 `;
-=======
-
-  margin-left: 40px;
-`;
-
-
->>>>>>> 3e9dff8adc4a6243021c988c87ba984c7494660b

@@ -10,16 +10,14 @@ import { useNavigate } from "react-router-dom";
 const Post = ({ post }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // 나중에 유저명으로 삭제 제한시 유저명 받아와서 지정해주기
-  const user1 = "bora";
+  const Myname = localStorage.getItem("username");
 
   return (
     <>
       <StPost key={post.id}>
         <PostImg src={kingOgu}></PostImg>
-        <PostTitle>{post.name} 님을 칭찬합니다 왇</PostTitle>
-        <Postdesc>{post.desc}</Postdesc>
+        <PostTitle>{post.title} 님을 칭찬합니다 왇</PostTitle>
+        <Postdesc>{post.content}</Postdesc>
         <OpenCommentBtn
           onClick={() => {
             navigate(`/boards/${post.id}`);
@@ -27,7 +25,7 @@ const Post = ({ post }) => {
         >
           상세 보기
         </OpenCommentBtn>
-        {post.user === user1 ? (
+        {post.author === Myname ? (
           <DelBtn onClick={() => dispatch(__deletePosts(post.id))}>삭제</DelBtn>
         ) : null}
       </StPost>
@@ -39,12 +37,12 @@ export default Post;
 
 const StPost = styled.div`
   position: relative;
-  width: 80%;
-  min-width: 600px;
+  width: 70%;
+  min-width: 500px;
   min-height: 200px;
   /* height: auto; */
   background-color: white;
-  margin: 20px auto 0 auto;
+  margin: 20px auto 10px auto;
   border-radius: 10px;
   box-shadow: 0px 0px 3px 0px grey;
 `;

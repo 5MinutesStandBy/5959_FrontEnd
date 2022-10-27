@@ -14,28 +14,26 @@ import CommentList from "../../components/comment/CommentList";
 
 const Detail = () => {
   const postData = useSelector((state) => state.post.board);
-  const commentsData = useSelector((state) => state.comment.comments.data);
+  const commentsData = useSelector((state) => state.post.board.commentList);
   const [edit, setEdit] = useState(false);
   const todo = useSelector((state) => state.post.todo);
+  const comments = useSelector((state)=>state.comment.comments.data)
 
   const dispatch = useDispatch();
 
   const { id } = useParams();
-
   const initialState = {
     content: "",
     postId: id,
   };
 
-  console.log(postData);
-
   useEffect(() => {
     dispatch(__getPost(id));
     dispatch(__getCommentById(id));
-  }, [dispatch, id, todo]);
+  }, [dispatch, comments]);
 
   const [comment, setComment] = useState(initialState);
-  const [content, setContent] = useState(postData.desc);
+  const [content, setContent] = useState(postData.content);
 
   const commentChange = (e) => {
     setComment({ ...comment, content: e.target.value, postId: id, id: "" });
@@ -64,9 +62,8 @@ const Detail = () => {
     } else {
       dispatch(
         __updatePost({
-          user: postData.user,
-          name: postData.name,
-          desc: content,
+          title: postData.title,
+          content: content,
           id: postData.id,
         })
       );
@@ -80,13 +77,13 @@ const Detail = () => {
       {!edit ? (
         <BodyContainer style={{ flexDirection: "column" }}>
           <StTitle>
-            <StText>{postData.name}</StText>
+            <StText>{postData.title}</StText>
             <StEdit onClick={changeEdit}>수정</StEdit>
           </StTitle>
           <StDetailBox>
             <StContent>
               <StImg src={boardOgu} />
-              <span>{postData.desc}</span>
+              <span>{postData.content}</span>
             </StContent>
           </StDetailBox>
           <StComment>
@@ -97,14 +94,14 @@ const Detail = () => {
             />
             <StAdd onClick={addComment}>추가</StAdd>
           </StComment>
-          {commentsData.map((comment) => (
+          {commentsData?.map((comment) => (
             <CommentList key={comment.id} comment={comment} />
           ))}
         </BodyContainer>
       ) : (
         <BodyContainer style={{ flexDirection: "column" }}>
           <StTitle>
-            <StText>{postData.name}</StText>
+            <StText>{postData.title}</StText>
             <StEdit onClick={updatePost}>수정 완료</StEdit>
           </StTitle>
           <StDetailBox>
@@ -119,7 +116,7 @@ const Detail = () => {
             />
             <StAdd onClick={addComment}>추가</StAdd>
           </StComment>
-          {commentsData.map((comment) => (
+          {postData.commentList.map((comment) => (
             <CommentList key={comment.id} comment={comment} />
           ))}
         </BodyContainer>

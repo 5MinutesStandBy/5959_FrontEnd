@@ -2,16 +2,69 @@ import React from "react";
 import styled from "styled-components";
 import babyOgu from "../../static/images/하트아기오구2.png";
 import { useNavigate } from "react-router-dom";
+import { CommonBtn } from "../../components/elements/CommonBtn";
+import { useDispatch } from "react-redux";
+import logoutUser from "../../redux/modules/signinSlice";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+  // const nav = () => {
+  //   if(localStorage.token !== ''){
+  //     navigate("/boards")
+  //   }else{
+  //     navigate('')
+  //   }
+  // }
+
+  const token = localStorage.getItem("token");
+  const ToMypage = () => {
+    navigate("/mypage");
+  };
+  const ToHomeOrList = () => {
+    if (token) {
+      navigate("/boards");
+    } else {
+      navigate("/");
+    }
+  };
+
+  const logoutHandler = () => {
+    alert("로그아웃 되었습니다.");
+    localStorage.removeItem("token");
+    localStorage.removeItem("refresh-token");
+    navigate("/");
+    dispatch(logoutUser());
+  };
 
   return (
-    <StNav onClick={() => navigate("/")}>
-      <StImg src={babyOgu} />
-      <StTitle>OGU OGU</StTitle>
+    <StNav>
+      <StImg src={babyOgu} onClick={ToHomeOrList} />
+      <StTitle onClick={ToHomeOrList}>OGU OGU</StTitle>
+      {token ? (
+        <>
+          <CommonBtn
+            color="black"
+            fs="18px"
+            top="20px"
+            right="110px"
+            onClick={ToMypage}
+          >
+            마이페이지
+          </CommonBtn>
+          <CommonBtn
+            color="black"
+            fs="18px"
+            top="20px"
+            right="20px"
+            onClick={logoutHandler}
+          >
+            로그아웃
+          </CommonBtn>
+        </>
+      ) : null}
     </StNav>
-    //토큰 있는 경우 로그아웃 버튼
   );
 };
 

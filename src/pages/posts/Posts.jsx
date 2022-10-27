@@ -8,6 +8,7 @@ import Loading from "../../components/posts/Loading";
 import noteBg from "../../static/images/노트배경2.png";
 import Post from "../../components/posts/Post";
 import { useNavigate } from "react-router-dom";
+import { __getUsername } from "../../redux/modules/signinSlice";
 
 const Posts = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const Posts = () => {
 
   useEffect(() => {
     dispatch(__getPosts());
+    // dispatch(__getUsername());
   }, [dispatch]);
 
   if (isLoading === true) {
@@ -54,19 +56,19 @@ const BgImg = styled.img`
   src: ${(props) => props.src};
   position: absolute;
   top: 40px;
-  width: 100%;
+  margin: 0 52% 0 48%;
+  width: 70%;
   min-width: 800px;
   height: auto;
   min-height: 870px;
-  max-height: 1500px;
-  /* transform: translate(0%, 0%); */
+  max-height: 800px;
 `;
 
 const PostBtn = styled.button`
   position: absolute;
   padding: 5px 15px;
   top: 40px;
-  right: 10%;
+  right: 17%;
   width: 200px;
   background-color: #fff;
   color: #ff6600;
@@ -90,7 +92,8 @@ const PostList = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
-  top: 120px;
-  width: 80%;
-  height: auto;
+  top: 12%;
+  width: 70%;
+  height: 79%;
+  overflow: auto;
 `;
