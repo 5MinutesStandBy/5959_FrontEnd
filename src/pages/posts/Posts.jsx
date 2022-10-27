@@ -68,7 +68,7 @@ const PostBtn = styled.button`
   position: absolute;
   padding: 5px 15px;
   top: 40px;
-  right: 17%;
+  right: 22%;
   width: 200px;
   background-color: #fff;
   color: #ff6600;
@@ -96,4 +96,7 @@ const PostList = styled.div`
   width: 70%;
   height: 79%;
   overflow: auto;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
