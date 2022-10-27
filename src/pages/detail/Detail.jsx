@@ -14,10 +14,6 @@ import CommentList from "../../components/comment/CommentList";
 
 const Detail = () => {
   const postData = useSelector((state) => state.post.board);
-<<<<<<< HEAD
-=======
-
->>>>>>> 3e9dff8adc4a6243021c988c87ba984c7494660b
   const commentsData = useSelector((state) => state.comment.comments.data);
   const [edit, setEdit] = useState(false);
   const todo = useSelector((state) => state.post.todo);
@@ -30,14 +26,9 @@ const Detail = () => {
     content: "",
     postId: id,
   };
-<<<<<<< HEAD
-
-
-=======
 
   console.log(postData);
 
->>>>>>> 3e9dff8adc4a6243021c988c87ba984c7494660b
   useEffect(() => {
     dispatch(__getPost(id));
     dispatch(__getCommentById(id));
