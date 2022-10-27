@@ -15,6 +15,7 @@ export const __goodHeart = createAsyncThunk(
                 "Content-Type": "application/json",
                 },
                 });
+                console.log(data)
             return thunkAPI.fulfillWithValue(payload);
         }catch(e){
             return thunkAPI.rejectWithValue(payload)

@@ -21,7 +21,6 @@ const Detail = () => {
 
   const dispatch = useDispatch();
 
-  console.log(commentsData)
   const { id } = useParams();
   const initialState = {
     content: "",
