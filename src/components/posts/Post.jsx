@@ -7,9 +7,10 @@ import { __deletePosts } from "../../redux/modules/postsSlice";
 import UpdatePost from "../../components/posts/UpdatePost";
 import { useNavigate } from "react-router-dom";
 
-const Post = ({ post, username }) => {
+const Post = ({ post }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const Myname = localStorage.getItem("username");
 
   return (
     <>
@@ -24,7 +25,7 @@ const Post = ({ post, username }) => {
         >
           상세 보기
         </OpenCommentBtn>
-        {post.author === username ? (
+        {post.author === Myname ? (
           <DelBtn onClick={() => dispatch(__deletePosts(post.id))}>삭제</DelBtn>
         ) : null}
       </StPost>
@@ -36,12 +37,12 @@ export default Post;
 
 const StPost = styled.div`
   position: relative;
-  width: 80%;
-  min-width: 600px;
+  width: 70%;
+  min-width: 500px;
   min-height: 200px;
   /* height: auto; */
   background-color: white;
-  margin: 20px auto 0 auto;
+  margin: 20px auto 10px auto;
   border-radius: 10px;
   box-shadow: 0px 0px 3px 0px grey;
 `;

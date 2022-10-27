@@ -2,9 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 // import jwt_decode from "jwt-decode";
 
-//import Cookie - 쿠키를 쓸건지 로컬스토리지 쓸건지??
-import { setCookie, getCookie, removeCookie } from "../../shared/cookie";
-
 //인스턴스 만들기
 // InitialState
 const initialState = {
@@ -26,7 +23,7 @@ export const __getUsername = createAsyncThunk(
         },
       });
       console.log(data);
-      return thunkAPI.fulfillWithValue(data.data.username);
+      return thunkAPI.fulfillWithValue(data.data.data.username);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -40,20 +37,19 @@ export const __CheckUser = createAsyncThunk(
   "Users/loginUser",
   async ({ userInfo, navigate }, thunkAPI) => {
     try {
-      const data = await axios.post(`http://13.125.2.119/api/login`, userInfo);
+      const data = await axios.post(
+        `http://13.125.2.119/api/auth/login`,
+        userInfo
+      );
       console.log(data);
-
-      localStorage.setItem("token",data.headers.authorization)
-      localStorage.setItem("refresh-token",data.headers.refreshtoken)
-      localStorage.setItem("username", data.data.data.username)
-      navigate("/boards")
-      return thunkAPI.fulfillWithValue(data.data);
-
+      localStorage.setItem("token", data.headers.authorization);
+      localStorage.setItem("refresh-token", data.headers.refreshtoken);
+      localStorage.setItem("username", data.data.data.username);
       if (data.data.success === true) {
         alert("로그인 성공");
         navigate("/boards");
-        return thunkAPI.fulfillWithValue(data.data);
       }
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error);
       alert("로그인 실패!");

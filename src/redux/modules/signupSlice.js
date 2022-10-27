@@ -11,30 +11,33 @@ const initialState = {
 
 // 회원가입 정보 보내면 true/false??
 
-export const __addUser1 = createAsyncThunk(
-  "Users/addUser",
-  async (payload, thunkAPI) => {
-    const resData = await axios
-      .post(`http://13.125.2.119/api/auth/signup`, payload)
-      .then((res) => res.data)
-      .catch((err) => console.err(err));
-      console.log(resData)
-    return thunkAPI.fulfillWithValue(resData);
-  }
-);
+// export const __addUser1 = createAsyncThunk(
+//   "Users/addUser",
+//   async (payload, thunkAPI) => {
+//     const resData = await axios
+//       .post(`http://13.125.2.119/api/auth/signup`, payload)
+//       .then((res) => res.data)
+//       .catch((err) => console.err(err));
+//     console.log(resData);
+//     return thunkAPI.fulfillWithValue(resData);
+//   }
+// );
 
 export const __addUser2 = createAsyncThunk(
   "Users/addUser",
   async ({ userInfo, navigate }, thunkAPI) => {
     try {
-      const data = await axios.post(`http://13.125.2.119/api/signup`, userInfo);
+      const data = await axios.post(
+        `http://13.125.2.119/api/auth/signup`,
+        userInfo
+      );
       if (data.data.success === true) {
         alert("회원가입이 완료되었습니다!");
         navigate("/");
       }
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      if (error.response.data.success == false) {
+      if (error.response.data.success === false) {
         alert(`${error.response.data.errorMessage}`);
       }
       return thunkAPI.rejectWithValue(error);
@@ -48,8 +51,8 @@ export const __CheckUserId = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.post(
-        `http://13.125.2.119/api/signup`,
-        payload.userInfo
+        `http://13.125.2.119//api/auth/checkid`,
+        payload
       );
       console.log(payload);
       console.log(data);
@@ -82,14 +85,6 @@ export const SignupSlice = createSlice({
     [__addUser2.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
-    },
-    [__CheckUserId.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      state.users = action.payload;
-    },
-    [__CheckUserId.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.users = action.payload;
     },
   },
 });
