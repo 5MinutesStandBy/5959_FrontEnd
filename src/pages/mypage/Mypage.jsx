@@ -36,7 +36,7 @@ const Mypage = () => {
         {open1 ? (
           <StContent>
             {myposts.map((mypost) => (
-              <StPost key={mypost.id} mheight="200px">
+              <StPost key={mypost.id} mheight="180px">
                 <RandomImg />
                 <PostTitle>{mypost.title}</PostTitle>
                 <PostDesc>{mypost.content}</PostDesc>
@@ -64,7 +64,7 @@ const Mypage = () => {
             ))}
           </StContent>
         ) : null}
-        <StTitle
+        {/* <StTitle
           left="440px"
           open={open3}
           onClick={() => {
@@ -75,7 +75,7 @@ const Mypage = () => {
         >
           좋아요 한 포스트
         </StTitle>
-        {open3 ? <StContent>좋아요 한 무언가</StContent> : null}
+        {open3 ? <StContent>좋아요 한 무언가</StContent> : null} */}
       </StContainer>
     </BodyContainer>
   );
@@ -89,6 +89,9 @@ const StContainer = styled.div`
   min-width: 700px;
   top: 20px;
   margin: 0 auto;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const StTitle = styled.div`
@@ -120,7 +123,7 @@ const StContent = styled.div`
   position: absolute;
   align-self: center;
   width: 100%;
-  min-height: 600px;
+  min-height: 650px;
   height: auto;
   top: 72px;
   left: ${(props) => props.left};
