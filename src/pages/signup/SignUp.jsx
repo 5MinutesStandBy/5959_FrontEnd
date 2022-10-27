@@ -47,7 +47,6 @@ const Signup = () => {
   const changeClick = () => {
     setIsClick(true);
   };
-  console.log(username);
   const onSubmitHandler = (e) => {
     e.preventDefault();
     setIsClick(true);

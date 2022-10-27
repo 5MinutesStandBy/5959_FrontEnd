@@ -38,7 +38,7 @@ export const __CheckUser = createAsyncThunk(
   async ({ userInfo, navigate }, thunkAPI) => {
     try {
       const data = await axios.post(
-        `http://13.125.2.119/api/auth/checkid`,
+        `http://13.125.2.119/api/auth/login`,
         userInfo
       );
       console.log(data);

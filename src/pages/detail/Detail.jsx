@@ -11,6 +11,7 @@ import {
   __getCommentById,
 } from "../../redux/modules/commentSlice";
 import CommentList from "../../components/comment/CommentList";
+import { __goodHeart } from "../../redux/modules/heartSlice";
 
 const Detail = () => {
   const postData = useSelector((state) => state.post.board);
@@ -26,14 +27,21 @@ const Detail = () => {
     content: "",
     postId: id,
   };
-
   useEffect(() => {
     dispatch(__getPost(id));
-    dispatch(__getCommentById(id));
+    // dispatch(__getCommentById(id));
   }, [dispatch, comments]);
 
   const [comment, setComment] = useState(initialState);
   const [content, setContent] = useState(postData.content);
+  const [good, setGood] = useState(false);
+  const heart = useSelector((state)=>state.heart.heart)
+  console.log(heart)
+
+  const goodHandler = () => {
+    setGood(!good)
+    dispatch(__goodHeart(id))
+  }
 
   const commentChange = (e) => {
     setComment({ ...comment, content: e.target.value, postId: id, id: "" });
@@ -78,6 +86,9 @@ const Detail = () => {
         <BodyContainer style={{ flexDirection: "column" }}>
           <StTitle>
             <StText>{postData.title}</StText>
+            <div>
+            { !good ? <GoodDiv onClick={goodHandler}>🤍<span>0</span></GoodDiv> : <GoodDiv onClick={goodHandler} >❤️<span>0</span></GoodDiv>}
+            </div>
             <StEdit onClick={changeEdit}>수정</StEdit>
           </StTitle>
           <StDetailBox>
@@ -126,6 +137,8 @@ const Detail = () => {
 };
 
 export default Detail;
+
+const GoodDiv = styled.div``;
 
 const StContentEdit = styled.textarea`
   min-width: 430px;

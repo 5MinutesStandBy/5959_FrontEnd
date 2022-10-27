@@ -7,7 +7,8 @@ export const __goodHeart = createAsyncThunk(
     "GOOD",
     async(payload,thunkAPI)=>{
         try{
-            const {data} = await axios.put(`http://13.125.2.119:8080/api/heart/${payload}`,payload,
+            const board_id = payload
+            const {data} = await axios.post(`http://13.125.2.119:8080/api/heart/${board_id}`,payload,
             {
                 headers: {
                 Authorization: localStorage.getItem("token"),
@@ -16,7 +17,8 @@ export const __goodHeart = createAsyncThunk(
                 },
                 });
                 console.log(data)
-            return thunkAPI.fulfillWithValue(payload);
+                
+            return thunkAPI.fulfillWithValue(board_id);
         }catch(e){
             return thunkAPI.rejectWithValue(payload)
         }

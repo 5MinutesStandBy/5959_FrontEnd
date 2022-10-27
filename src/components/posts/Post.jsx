@@ -6,6 +6,7 @@ import kingOgu from "../../static/images/왕관오구.png";
 import { __deletePosts } from "../../redux/modules/postsSlice";
 import UpdatePost from "../../components/posts/UpdatePost";
 import { useNavigate } from "react-router-dom";
+import RandomImg from "../elements/RandomImg";
 
 const Post = ({ post }) => {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ const Post = ({ post }) => {
   return (
     <>
       <StPost key={post.id}>
-        <PostImg src={kingOgu}></PostImg>
+        <RandomImg />
         <PostTitle>{post.title} 님을 칭찬합니다 왇</PostTitle>
         <Postdesc>{post.content}</Postdesc>
         <OpenCommentBtn

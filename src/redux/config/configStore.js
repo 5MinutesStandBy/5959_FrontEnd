@@ -5,6 +5,7 @@ import comment from "../modules/commentSlice";
 import signup from "../modules/signupSlice";
 import signin from "../modules/signinSlice";
 import myposts from "../modules/mypageSlice";
+import heart from "../modules/heartSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     signup,
     signin,
     myposts,
+    heart
   },
 });
 
