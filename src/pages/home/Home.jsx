@@ -33,10 +33,6 @@ const UnLoginMain = () => {
       password: password,
     };
     setisClicked(true);
-<<<<<<< HEAD
-
-=======
->>>>>>> a8a34e259288639f558dc673b439e4c0785d3d23
     dispatch(__CheckUser({ userInfo, navigate }));
 
 

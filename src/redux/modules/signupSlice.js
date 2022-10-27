@@ -27,7 +27,7 @@ export const __addUser2 = createAsyncThunk(
   "Users/addUser",
   async ({ userInfo, navigate }, thunkAPI) => {
     try {
-      const data = await axios.post(`http://13.125.2.119/api/signup`, userInfo);
+      const data = await axios.post(`http://13.125.2.119/api/auth/signup`, userInfo);
       if (data.data.success === true) {
         alert("회원가입이 완료되었습니다!");
         navigate("/");
