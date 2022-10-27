@@ -59,7 +59,7 @@ const UnLoginMain = () => {
                 minLengt={7}
               />
               {username.trim() === "" && isClicked ? (
-                <StIdIn>7자리 이상의 아이디를 입력해주세요</StIdIn>
+                <StIdIn>아이디를 입력해주세요</StIdIn>
               ) : null}
             </StIdBox>
             <StPassBox>
@@ -70,7 +70,7 @@ const UnLoginMain = () => {
                 minLength={8}
               />
               {password.trim() === "" && isClicked ? (
-                <StPassIn>8자리 이상의 비밀번호를 입력해주세요</StPassIn>
+                <StPassIn>비밀번호를 입력해주세요</StPassIn>
               ) : null}
             </StPassBox>
             <StBtn type="submit" onClick={onSubmitHandler}>
