@@ -16,7 +16,6 @@ const UnLoginMain = () => {
   const [password, setPassword] = useState("");
   const [isClicked, setisClicked] = useState(false);
 
-
   const changeIdHandler = (e) => {
     setUsername(e.target.value);
   };
@@ -24,7 +23,6 @@ const UnLoginMain = () => {
   const changePasswordHandler = (e) => {
     setPassword(e.target.value);
   };
-
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -34,8 +32,6 @@ const UnLoginMain = () => {
     };
     setisClicked(true);
     dispatch(__CheckUser({ userInfo, navigate }));
-
-
   };
 
   const clickHandler = () => {

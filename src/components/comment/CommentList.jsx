@@ -23,8 +23,6 @@ const CommentList = ({ comment }) => {
     dispatch(__getCommentById(id))
   },[])
 
-  console.log(comment)
-
   const editHandler = () => {
     if (reply.trim() === "") {
       alert("댓글을 입력해주세요!");
