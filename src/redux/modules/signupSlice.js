@@ -7,6 +7,7 @@ const initialState = {
   users: [],
   isLoading: false,
   error: null,
+  checkId : [],
 };
 
 // 회원가입 정보 보내면 true/false??
@@ -51,7 +52,7 @@ export const __CheckUserId = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.post(
-        `http://13.125.2.119//api/auth/checkid`,
+        `http://13.125.2.119/api/auth/checkid`,
         payload
       );
       console.log(payload);
@@ -86,6 +87,17 @@ export const SignupSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    [__CheckUserId.pending]: (state,action) => {
+      state.isLoading = true;
+    },
+    [__CheckUserId.fulfilled]: (state,action) => {
+      state.isLoading = false;
+      state.checkId = action.payload;
+    },
+    [__CheckUserId.rejected]: (state,action) => {
+      state.isLoading = false;
+      state.error = action.payload
+    }
   },
 });
 

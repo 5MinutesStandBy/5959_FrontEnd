@@ -23,6 +23,9 @@ const Signup = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [isClick, setIsClick] = useState(false);
 
+  const checkId = /^([0-9]|[a-z]|[A-Z]|-|_|@|\.){3,12}$/
+  const checkPass = /^([0-9]|[a-z]|[A-Z]|[~!@#$%^&*()+|=]){4,12}$/
+
   let userInfo = {
     username: username,
     password: password,
@@ -40,19 +43,14 @@ const Signup = () => {
   const changeRePass = (e) => {
     setRePass(e.target.value);
   };
-  const isNotNullHandler = () => {
-    if (username.trim() === "" || password.trim() === "") {
-      return;
-    } else {
-    }
-  };
 
   const changeClick = () => {
     setIsClick(true);
   };
-
+  console.log(username);
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    setIsClick(true);
     if (
       username.trim() === "" ||
       password.trim() === "" ||
@@ -60,15 +58,18 @@ const Signup = () => {
     ) {
       return alert("모든 항목을 입력해주세요.");
     }
-    console.log(userInfo);
-    // dispatch(__addUser1(userInfo));
+    if (checkId.test(username) && checkPass.test(password)){
     dispatch(__addUser2({ userInfo, navigate }));
     setUsername("");
     setPassword("");
     setRePass("");
+  }else{
+    return alert("올바른 형식을 입력해주세요")
+  }
   };
 
   const CheckIdClickHandler = () => {
+
     if (username.trim() === "") {
       return alert("아이디를 입력해주세요");
     }
@@ -93,8 +94,8 @@ const Signup = () => {
               />
               <span onClick={CheckIdClickHandler}>중복확인</span>
             </StOverLap>
-            {username.trim() === "" && isClick ? (
-              <StIdIn>7자리 이상의 아이디를 입력해주세요</StIdIn>
+            {(username.trim() === "" && isClick) || !checkId.test(username) ? (
+              <StIdIn>3~12글자 사이의 영어 대/소문자, -,_,@만 사용가능합니다</StIdIn>
             ) : null}
           </StIdBox>
           <StPassBox>
@@ -104,8 +105,8 @@ const Signup = () => {
               onChange={changePasswordHandler}
               minLength={8}
             />
-            {password.trim() === "" && isClick ? (
-              <StPassIn>8자리 이상의 비밀번호를 입력해주세요</StPassIn>
+            {password.trim() === "" && isClick && !checkPass.test(password)? (
+              <StPassIn>4~12자리 영어 대/소문자, ~!@#$%^&*()+|=만 사용가능합니다</StPassIn>
             ) : null}
           </StPassBox>
           <STRePassBox>
@@ -178,11 +179,13 @@ const StRePassInput = styled.input`
 const StPassIn = styled.span`
   font-size: 10px;
   color: blue;
+  width: 200px;
 `;
 
 const StIdIn = styled.span`
   font-size: 10px;
   color: blue;
+  width:200px;
 `;
 
 const StSignIn = styled.span`
